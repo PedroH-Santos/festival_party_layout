@@ -1,0 +1,42 @@
+
+:root {
+  --pink-500: #FBA8A8;
+  --pink-400: #FFC5C5;
+  --pink-300: #FFDDDD;
+
+  --red-800: #C80C0C;
+  --red-600: #B50000;
+  --red-500: #FF0404;
+  --red-400: #FC2F2F;
+
+  --orange-500: #FE6E6E; 
+
+  --gray-400: #F6F6F6;
+ 
+  --white: #F6F6F6;
+
+  --yellow: #EBFF04;
+
+  --blue: #007CC2;
+
+}
+
+
+
+html, body {
+  padding: 0;
+  margin: 0;
+  font-family: Istok Web, sans-serif;
+  background-color: var(--pink-300);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}

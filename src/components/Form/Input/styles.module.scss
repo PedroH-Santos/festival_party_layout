@@ -1,0 +1,26 @@
+.label {
+    font-size: 1.2rem;
+    color: var(--white);
+    text-align: center;
+   
+   
+}
+ 
+
+.input {
+    background-color: var(--orange-500);
+    padding: 1rem;
+    border: 0;
+    color: var(--white);
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    &[type="password"] {
+        margin-left: 1.6rem;
+    }
+
+
+}
+.input:focus {
+    outline: none;
+}
