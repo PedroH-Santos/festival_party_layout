@@ -31,5 +31,43 @@
     button:hover {
         background-color: var(--red-600);
     }
+    div > input {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+
+        &[type="password"] {
+            margin-left: 1.6rem;
+        }
+    
+    }
+
+}
+
+
+
+
+@media screen and (max-width: 991px) {
+    .logo {
+        margin-left: unset;
+        
+
+    }
+    .form {
+        label {
+            display: block;
+        }
+        button{
+            margin-left: unset;
+        }
+        div > input {
+            margin-left: unset;
+    
+            &[type="password"] {
+                margin-left: unset;
+            }
+        
+        }
+    }
 
 }
