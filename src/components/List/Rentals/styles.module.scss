@@ -3,8 +3,18 @@
     margin-left: 2rem;
     background-color: var(--pink-300);
     table {
-        thead {
-            background-color: var(--pink-400)
+        width: 100%;
+        .header {
+            background-color: var(--pink-400);
+            color: var(--red-600);
+        }
+        .body {
+            text-align: center;
+        }
+        .item {
+            background-color: var(--orange-500);
+            color: var(--white);
+            padding: 2rem;
         }
     }
 }
