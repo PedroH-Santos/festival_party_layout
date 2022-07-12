@@ -1,5 +1,6 @@
 import styles from "./styles.module.scss";
 import Image from 'next/image'
+import Link from "next/link";
 
 
 export default function Header() {
@@ -9,12 +10,12 @@ export default function Header() {
                 <Image src="/images/logo.png" alt="Logo" width={64} height={64} />
                 <div className={styles.menu}>
                     <nav>
-                        <a href="#"> Aluguéis </a>
-                        <a  href="#"> Vestidos </a>
-                        <a  href="#"> Acessórios </a>
-                        <a  href="#"> Finanças </a>
-                        <a  href="#"> Usuários </a>
-                        <a  href="#"> Entregas </a>
+                        <Link href="/rentals"> Aluguéis </Link>
+                        <Link href="/dresses"> Vestidos </Link>
+                        <Link  href="/accessories"> Acessórios </Link>
+                        <Link  href="/transactions"> Finanças </Link>
+                        <Link  href="/users"> Usuários </Link>
+                        <Link href="/deliveries"> Entregas </Link>
 
 
                     </nav>

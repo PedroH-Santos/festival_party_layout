@@ -1,25 +1,19 @@
-.labelWhite {
-    font-size: 1.2rem;
-    color: var(--white);
-    text-align: center;
-}
-
 .labelOrange {
     color: var(--orange-500);
     display: block;
     text-align: center;
     font-size: 1.2rem;
 }
- 
 
-.input {
+.textArea{
     background-color: var(--orange-500);
-    padding: 1rem;
     border: 0;
     color: var(--white);
+    height: 200px;
+    width: 400px;
+    padding: 2rem;
 
-
-}
-.input:focus {
-    outline: none;
+    &:focus {
+        outline: none;
+    }
 }

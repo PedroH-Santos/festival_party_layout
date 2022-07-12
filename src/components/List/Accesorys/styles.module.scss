@@ -1,0 +1,33 @@
+.container {
+    width: 95%;
+    margin-left: 2rem;
+    background-color: var(--pink-300);
+    table {
+        width: 100%;
+        .header {
+            background-color: var(--pink-400);
+            color: var(--red-600);
+        }
+        .body {
+            text-align: center;
+        }
+        .item {
+            background-color: var(--orange-500);
+            color: var(--white);
+            padding: 2rem;
+        }
+    }
+
+    .insertNew{
+        padding: 0.5rem 2rem;
+        background-color: var(--red-400);
+        color: var(--white);
+        border: 0px;
+        transition: all 0.3s ease-in-out;
+        float: right;
+        margin-top: 2rem;
+        &:hover {
+            background-color: var(--red-600);
+        }
+    }
+}

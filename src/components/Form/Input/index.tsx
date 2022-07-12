@@ -3,12 +3,15 @@ import styles from "./styles.module.scss";
 interface InputProps {
     name: string;
     type: string;
+    style?: string;
 }
 
-export default function Input({name,type}: InputProps) {
+export default function Input({name,type,style}: InputProps) {
+    
+    const styleLabel = style == 'orange'  ? styles.labelOrange : styles.labelWhite;
     return (
         <>
-            <label className={styles.label}> {name} </label>
+            <label className={styleLabel}> {name} </label>
             <input type={type} className={styles.input} />
         </>
     )
