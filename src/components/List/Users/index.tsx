@@ -24,6 +24,9 @@ export default function ListUsers() {
 
 
                 </table>
+            </div>
+
+            <div className={`${styles.button}`}>
                 <Link href={`/insert/user`} >
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>

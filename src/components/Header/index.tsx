@@ -10,12 +10,12 @@ export default function Header() {
                 <Image src="/images/logo.png" alt="Logo" width={64} height={64} />
                 <div className={styles.menu}>
                     <nav>
-                        <Link href="/rentals"> Aluguéis </Link>
-                        <Link href="/dresses"> Vestidos </Link>
-                        <Link  href="/accessories"> Acessórios </Link>
-                        <Link  href="/transactions"> Finanças </Link>
-                        <Link  href="/users"> Usuários </Link>
-                        <Link href="/deliveries"> Entregas </Link>
+                        <Link href="/list/rentals"> Aluguéis </Link>
+                        <Link href="/list/dresses"> Vestidos </Link>
+                        <Link  href="/list/accessories"> Acessórios </Link>
+                        <Link  href="/list/transactions"> Finanças </Link>
+                        <Link  href="/list/users"> Usuários </Link>
+                        <Link href="/list/deliveries"> Entregas </Link>
 
 
                     </nav>

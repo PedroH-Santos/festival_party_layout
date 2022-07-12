@@ -1,33 +1,80 @@
 .container {
     width: 95%;
+    margin-bottom: 2rem;
     margin-left: 2rem;
     background-color: var(--pink-300);
+    padding: 2rem; 
     table {
         width: 100%;
-        .header {
+        border: 0px;
+        border-collapse: separate;
+        border-spacing:0 2rem;
+        .header { 
             background-color: var(--pink-400);
             color: var(--red-600);
+            th {
+                padding: 0.8rem;
+            }
         }
         .body {
             text-align: center;
+            width: 100%;
+
+            td {
+                padding: 1rem;
+            }
+            .icon {
+                margin-left: 1rem;
+                &:hover {
+                    color: var(--red-600);
+                    cursor: pointer;
+                }
+            }
+            .button{
+                background-color: var(--red-500);
+                border: 0px;
+                padding: 0.5rem 1rem;
+                color: var(--white);
+                transition: all 0.3s ease-in-out;
+                &:hover {
+                    background-color: var(--red-600);
+                }
+            }
+
+            .item {
+                background-color: var(--orange-500);
+                color: var(--white);   
+                width: 100%;         
+                img {
+                    width:5rem;
+                    width:5rem;
+                }
+            }
+
         }
-        .item {
-            background-color: var(--orange-500);
-            color: var(--white);
-            padding: 2rem;
-        }
+
     }
+
+
+}
+.button{
+    width:95%;
+    display: flex;
+    justify-content: right;
 
     .insertNew{
         padding: 0.5rem 2rem;
         background-color: var(--red-400);
         color: var(--white);
         border: 0px;
+        margin-right: 1rem;
+        margin-bottom: 2rem;
         transition: all 0.3s ease-in-out;
-        float: right;
         margin-top: 2rem;
         &:hover {
             background-color: var(--red-600);
         }
     }
+
+
 }

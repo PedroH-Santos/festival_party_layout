@@ -1,3 +1,6 @@
+import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import styles from "./styles.module.scss";
 
 export default function ListRentals() {
@@ -19,18 +22,50 @@ export default function ListRentals() {
                     </thead>
                     <tbody className={`${styles.body}`}>
                         <tr className={`${styles.item}`}>
-                            <td> </td>
+                            <td> <img src="/images/colar.jpg" /></td>
                             <td>123 </td>
                             <td>123 </td>
                             <td>123 </td>
                             <td>123 </td>
+                            <td>
+                                <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
+                                <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+
+                            </td>
+                            <td>
+                                <button className={`${styles.buttonMark}`}> Agendado </button>
+                            </td>
+
+                        </tr>
+
+                        <tr className={`${styles.item}`}>
+                            <td> <img src="/images/colar.jpg" /></td>
                             <td>123 </td>
-                            <td> </td>
+                            <td>123 </td>
+                            <td>123 </td>
+                            <td>123 </td>
+                            <td>
+                                <a href="#" className={`${styles.icon}`}> <FontAwesomeIcon icon={faPenToSquare} /></a>
+                                <a href="#" className={`${styles.icon}`} ><FontAwesomeIcon icon={faTrashCan} /></a>
+                                <a href="#" className={`${styles.icon}`}><FontAwesomeIcon icon={faMagnifyingGlass} /></a>
+
+                            </td>
+                            <td>
+                                <button className={`${styles.buttonMark}`}> Agendado </button>
+                            </td>
+
                         </tr>
                     </tbody>
 
 
                 </table>
+            </div>
+
+            <div className={`${styles.button}`}>
+                <Link href={`/insert/rental`} >
+                    <a className={`${styles.insertNew}`}>Cadastrar</a>
+                </Link>
             </div>
         </>
     )
