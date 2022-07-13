@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReactNode, useState } from "react";
-
+import styles from "./styles.module.scss";
 interface ItemMenuProps {
     name: string;
     haveSubMenu: boolean;
@@ -19,24 +19,29 @@ export default function ItemMenu({ href, name, haveSubMenu, children }: ItemMenu
     }
 
     function onHideSubMenu() {
-        setShowSubMenu(true);
+     setShowSubMenu(false);
     }
 
     return (
         <nav>
             {haveSubMenu ? (
-                <a onMouseEnter={onShowSubMenu} onMouseLeave={onHideSubMenu} > {name} </a>
+                <div onMouseEnter={onShowSubMenu} onMouseLeave={onHideSubMenu}  className={`${styles.container}`}  >
+                    <a className={`${styles.link}`}>{name} </a>
+                    {showSubMenu && (
+                        <div className={`${styles.submenu}`}>
+                            {children}
+                        </div>
+                    )}
+                </div>
 
             ) : (
-                <Link href={`${href}`} > {name} </Link>
+                <Link href={`${href}`}>
+                    <a className={`${styles.link}`}> {name} </a>
+                </Link>
             )
 
             }
-            {showSubMenu && (
-                <>
-                    {children}
-                </>
-            )}
+
 
         </nav>
     );

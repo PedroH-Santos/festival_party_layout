@@ -1,24 +1,12 @@
-
-.submenu{
-    display:flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    position: absolute;
-    
-}
-
 .link {
     background-color: var(--white);
     color: var(--orange-600);
     padding: 0.5rem 1rem;
-    margin-right: 2rem;
     text-decoration: none;
     transition: all 0.3s ease-in-out;
-    position: relative;
-    display:block;
+    display: block;
     min-width: 8rem;
     text-align: center;
-
 }
 .link:hover {
     background-color: var(--orange-500);

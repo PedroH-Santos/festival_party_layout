@@ -16,7 +16,7 @@ export default function Today() {
                     <Title icon={faCalendar} title="Aluguéis de vestidos do dia" size="lg" />
                     <ListRentals />
 
-                    <Title icon={faCalendar} title="Aluguéis de vestidos do dia" size="lg" />
+                    <Title icon={faCalendar} title="Aluguéis de acessórios do dia" size="lg" />
                     <ListRentals />
                 </>
             </Body>

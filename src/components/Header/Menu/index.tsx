@@ -1,22 +1,24 @@
-import Link from "next/link";
 import ItemMenu from "./ItemMenu";
-
+import ItemSubMenu from "./ItemSubMenu";
+import styles from "./styles.module.scss";
 
 export default function Menu() {
     return (
-        <nav>
-            <ItemMenu name="Aluguéis" haveSubMenu={true}>
+        <div className={styles.menu}>
+            <nav className={styles.links}>
+                <ItemMenu name="Aluguéis" haveSubMenu={true}>
+                    <ItemSubMenu name="Vestidos" href="/list/rentalsDresses" />
+                    <ItemSubMenu name="Accessórios" href="/list/rentalsAccessories" />
 
+                </ItemMenu>
+                <ItemMenu name="Vestidos" href="/list/dresses" haveSubMenu={false} />
+                <ItemMenu name="Acessórios" href="/list/accessories" haveSubMenu={false} />
+                <ItemMenu name="Finanças" href="/list/transactions" haveSubMenu={false} />
+                <ItemMenu name="Usuários" href="/list/users" haveSubMenu={false} />
+                <ItemMenu name="Entregas" href="/list/deliveries" haveSubMenu={false} />
 
-            </ItemMenu>
-            <ItemMenu name="Vestidos" href="/list/rentals" haveSubMenu={true}/>
-            <ItemMenu name="Acessórios" href="/list/dresses" haveSubMenu={true}/>
-            <ItemMenu name="Finanças" href="/list/accessories" haveSubMenu={true}/>
-            <ItemMenu name="Finanças" href="/list/transactions" haveSubMenu={true}/>
-            <ItemMenu name="Usuários" href="/list/users" haveSubMenu={true}/>
-            <ItemMenu name="Entregas" href="/list/deliveries" haveSubMenu={true}/>
-
-        </nav>
+            </nav>
+        </div>
     );
 
 }

@@ -1,5 +1,11 @@
+.menu {
+    flex: auto;
 
+    max-width: 100%;
+    .links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
-export default function Menu(){
-    
+    }
 }
