@@ -30,25 +30,9 @@ export default function ListRentals() {
                             <td>
                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                 <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
-
-                            </td>
-                            <td>
-                                <button className={`${styles.buttonMark}`}> Agendado </button>
-                            </td>
-
-                        </tr>
-
-                        <tr className={`${styles.item}`}>
-                            <td> <img src="/images/colar.jpg" /></td>
-                            <td>123 </td>
-                            <td>123 </td>
-                            <td>123 </td>
-                            <td>123 </td>
-                            <td>
-                                <a href="#" className={`${styles.icon}`}> <FontAwesomeIcon icon={faPenToSquare} /></a>
-                                <a href="#" className={`${styles.icon}`} ><FontAwesomeIcon icon={faTrashCan} /></a>
-                                <a href="#" className={`${styles.icon}`}><FontAwesomeIcon icon={faMagnifyingGlass} /></a>
+                                <Link href={`/detail/rental`} >
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                </Link>
 
                             </td>
                             <td>

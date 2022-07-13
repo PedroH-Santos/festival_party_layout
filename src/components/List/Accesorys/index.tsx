@@ -27,8 +27,9 @@ export default function ListAccessorys() {
                 
                                     <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                     <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
+                                    <Link href={"/detail/accessory"}>
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
-
+                                </Link>
                             </td>
                         </tr>
                     </tbody>

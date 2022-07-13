@@ -27,8 +27,9 @@ export default function ListDresses() {
                             <td>
                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                 <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
-
+                                <Link href={"/detail/dress"}>
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                </Link>
                             </td>
 
 

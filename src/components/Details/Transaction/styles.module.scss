@@ -1,0 +1,30 @@
+.container {
+    width: 95%;
+    margin-left: 2rem;
+    background-color: var(--pink-300);
+    text-align: center;
+    padding: 2rem;
+
+}
+
+.information{
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    div {
+        font-size: 1.2rem;
+        p {
+            color: var(--orange-600);
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        span {
+            color: var(--red-500); 
+
+        }
+
+    }
+}

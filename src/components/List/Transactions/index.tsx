@@ -26,7 +26,9 @@ export default function ListTransactions() {
                             <td>
                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                 <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                <Link href={`/detail/transaction`} >
+                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                </Link>
 
                             </td>
                         </tr>
