@@ -1,0 +1,9 @@
+.containerAlertLate{
+    color: var(--yellow-500);
+    margin-top: 0.5rem;
+ 
+    .alertLate {
+        background-color: var(--yellow-900);
+        color: var(--white);
+    }
+}

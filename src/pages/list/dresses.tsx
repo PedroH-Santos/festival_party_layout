@@ -6,7 +6,8 @@ import Title from "../../components/Title";
  
 export default function Dresses() {
     return (
-        <>
+        <div className="content">
+
             <Header />
             <Body>
                 <>
@@ -14,6 +15,6 @@ export default function Dresses() {
                     <ListDresses/>
                 </>
             </Body>
-        </>
+        </div>
     )
 } 

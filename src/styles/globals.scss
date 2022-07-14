@@ -17,9 +17,13 @@
  
   --white: #F6F6F6;
 
-  --yellow: #EBFF04;
 
-  --blue: #007CC2;
+  --yellow-900: #aab32f;
+  --yellow-500: #EBFF04;
+
+
+  --blue-700: #06507a;
+  --blue-500: #007CC2;
 
   --green: #068512;
 
@@ -47,4 +51,8 @@ a {
 
 .hidden {
   display: none;
+}
+
+.content{
+  position: relative;
 }
