@@ -2,9 +2,13 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useModal from "../../../hooks/useModal";
+import ModalDelete from "../../Modal/Delete";
 
 
 export default function ListTransactions() {
+    const { showModal,onChangeStatusModal } = useModal();
+
     return (
         <>
             <div className={`${styles.container}`}>
@@ -25,7 +29,7 @@ export default function ListTransactions() {
                             <td>RENTAL_DRESS </td>
                             <td>
                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
+                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal}/>
                                 <Link href={`/detail/transaction`} >
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                 </Link>
@@ -42,6 +46,8 @@ export default function ListTransactions() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
+            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
+
         </>
     )
 } 

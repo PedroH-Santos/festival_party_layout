@@ -2,7 +2,11 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ModalDelete from "../../Modal/Delete";
+import useModal from "../../../hooks/useModal";
 export default function ListAccessorys() {
+    const { showModal,onChangeStatusModal } = useModal();
+
     return (
         <>
             <div className={`${styles.container}`}>
@@ -26,7 +30,7 @@ export default function ListAccessorys() {
                             <td>
                 
                                     <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
-                                    <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
+                                    <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal}/>
                                     <Link href={"/detail/accessory"}>
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                 </Link>
@@ -43,6 +47,7 @@ export default function ListAccessorys() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
+            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
 
         </>
     )

@@ -4,8 +4,11 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import ToolTip from "../../ToolTip";
+import useModal from "../../../hooks/useModal";
+import ModalDelete from "../../Modal/Delete";
 
 export default function ListDeliveries() {
+    const { showModal,onChangeStatusModal } = useModal();
 
 
 
@@ -35,7 +38,7 @@ export default function ListDeliveries() {
                             <td>123 </td>
                             <td>
                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} />
+                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal}/>
                                 <Link href={`/detail/rental`} >
                                     <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                 </Link>
@@ -60,6 +63,9 @@ export default function ListDeliveries() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
+
+            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
+
         </>
     )
 } 
