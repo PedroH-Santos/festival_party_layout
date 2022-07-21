@@ -1,4 +1,4 @@
-import Input from "../../Input";
+import Input from "../../Inputs/Text";
 import styles from "./styles.module.scss";
 
 export default function FormUser() {

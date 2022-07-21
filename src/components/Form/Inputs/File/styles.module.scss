@@ -1,0 +1,33 @@
+
+
+.labelOrange {
+    color: var(--orange-500);
+    display: block;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+
+.input {
+
+    margin-top: 2rem;
+    color: var(--white);
+    background-color: var(--orange-500);
+    padding: 3rem;
+    font-size: 1.2rem;
+    text-align: center;
+    cursor: pointer;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-size: 0.8rem;
+        word-wrap: break-word;
+    }
+
+
+
+}

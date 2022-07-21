@@ -1,8 +1,8 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChangeEvent, useRef, useState } from "react";
-import Input from "../../Input";
-import TextArea from "../../TextArea";
+import Input from "../../Inputs/Text";
+import TextArea from "../../Inputs/TextArea";
 import styles from "./styles.module.scss";
 
 

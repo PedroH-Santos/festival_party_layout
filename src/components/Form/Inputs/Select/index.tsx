@@ -1,6 +1,7 @@
 import React, { ReactElement } from "react";
 import styles from "./styles.module.scss";
 import Select, { OptionsOrGroups, StylesConfig } from "react-select";
+import { Controller } from "react-hook-form";
 
 interface Option {
     id: string;
@@ -12,12 +13,20 @@ interface SelectProps {
     name: string;
     text: string;
     options: Option[];
+    register?: any;
+    control?: any;
 }
 
-export default function SelectTrait({ name, text, options }: SelectProps) {
+interface OptionTrait {
+    value: string;
+    label: string;
+}
+
+
+export default function SelectTrait({ name, text, options, register, control }: SelectProps) {
 
     const colourStyles: StylesConfig = {
-        singleValue:(provided) => ({
+        singleValue: (provided) => ({
             ...provided,
             color: '#fff',
         }),
@@ -49,7 +58,7 @@ export default function SelectTrait({ name, text, options }: SelectProps) {
 
     let optionsTrait: any = [];
     options.map(option => {
-        const trait = {
+        const trait: OptionTrait = {
             value: option.id,
             label: option.name
         }
@@ -58,7 +67,19 @@ export default function SelectTrait({ name, text, options }: SelectProps) {
     return (
         <>
             <label className={styles.labelOrange} > {text} </label>
-            <Select options={optionsTrait} name={name} styles={colourStyles} />
+            <Controller
+                control={control}
+                name={name}
+                rules={register}
+                render={({ field: { onChange } }) => (
+                    <Select
+                        onChange={(val: any) => onChange(val.value)}
+                        options={optionsTrait}
+                        styles={colourStyles}
+                    />
+                )}
+            />
+            
         </>
     )
 }

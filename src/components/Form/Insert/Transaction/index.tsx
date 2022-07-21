@@ -1,5 +1,5 @@
-import Input from "../../Input";
-import TextArea from "../../TextArea";
+import Input from "../../Inputs/Text";
+import TextArea from "../../Inputs/TextArea";
 import styles from "./styles.module.scss";
 
 export default function FormTransaction() {

@@ -35,10 +35,11 @@ export default function ListDresses({ dresses }: ListDressesProps) {
                     <tbody className={`${styles.body}`}>
                         {dresses?.map((dress) => {
                             const firstImage = (dress.images.length > 0) ? dress.images[0].image : '';
+                            const firstId = (dress.images.length > 0) ? dress.images[0].id : 'Sem Foto';
                             return (
 
                                 <tr className={`${styles.item}`} key={dress.id}>
-                                    <td> <Image src={`http://localhost:3333/images/${firstImage}`} alt={dress.images[0].id} width={60} height={60} /></td>
+                                    <td> <Image src={`http://localhost:3333/images/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td>{dress.name} </td>
                                     <td>R$ {dress.price} </td>
                                     <td>{dress.category.name} </td>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./styles.module.scss"; 
 import Image from 'next/image'
-import Input from "../Input";
+import Input from "../Inputs/Text";
 
 export default function Login() {
     return (
