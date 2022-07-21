@@ -2,7 +2,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 
 

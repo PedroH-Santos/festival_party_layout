@@ -2,31 +2,44 @@
 import styles from "./styles.module.scss";
 import Image from 'next/image'
 
-export default function InformationDress() {
+
+interface InformationDressProps {
+    dress: Dress | undefined;
+    rentals: Rental[] | undefined;
+}
+
+export default function InformationDress({dress,rentals} : InformationDressProps) {
+     const rentalLimit = rentals?.slice(0,3);
+
 
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.topInformation}`}>
-                <Image src="/images/colar.jpg" alt="Logo" className={styles.image} width={360} height={360} />
+                <Image src={`http://localhost:3333/images/${dress?.images[0].image}`} alt={dress?.images[0].id} className={styles.image} width={360} height={360} />
                 <div>
                     <h2> Próximos Aluguéis </h2>
-                    <p> 25/05/2022 - Pedro </p>
-                    <p> 25/05/2022 - Pedro </p>
-                    <p> 25/05/2022 - Pedro </p>
+                    {rentalLimit?.map((rental) => {
+                        const phrase = `${rental.start_date} - ${rental.user.name}`;
+                        return (
+                            <p key={rental.id}> {phrase} </p>
+                        )
+                    })}
+
+
                 </div>
             </div>
             <div className={`${styles.footerInformation}`}>
                 <div>
                     <p> Categoria : </p>
-                    <span> Rozado  </span>
+                    <span> {dress?.category.name}  </span>
                 </div>
                 <div>
                     <p>  Preço : </p>
-                    <span> R$ 13,50  </span>
+                    <span> R$ {dress?.price}  </span>
                 </div>
                 <div>
                     <p> Criação : </p>
-                    <span> 27/06/2022  </span>
+                    <span> <> {dress?.created_at} </> </span>
                 </div>
             </div>
         </div>

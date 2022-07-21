@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 import ToolTip from "../../ToolTip";
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 
 export default function ListDeliveries() {

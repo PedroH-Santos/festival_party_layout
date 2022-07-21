@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import styles from "./styles.module.scss";
 
@@ -45,7 +45,7 @@ export default function ListDresses({ dresses }: ListDressesProps) {
                                     <td>
                                         <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                         <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
-                                        <Link href={"/detail/dress"}>
+                                        <Link href={`/detail/dress/${dress.id}`}>
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                         </Link>
                                     </td>

@@ -9,10 +9,11 @@ import { queryClient } from "../../services/queryClient";
  
 export default function Dresses() {
 
-    const { data  } = useQuery('dresses', async () => {
+    const { data: dresses,error  } = useQuery('dresses', async () => {
         const response = await axios.get<Dress[]>('http://localhost:3333/dress');
         return response.data;
-    })
+    });
+
     return (
         <div className="content">
 
@@ -20,7 +21,7 @@ export default function Dresses() {
             <Body>
                 <>
                     <Title icon={faShirt} title="Vestidos" size="lg" />
-                    <ListDresses dresses={data}/>
+                    <ListDresses dresses={dresses}/>
                 </>
             </Body>
         </div>

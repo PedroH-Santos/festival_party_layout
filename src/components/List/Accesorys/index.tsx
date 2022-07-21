@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalDelete from "../../Modal/Delete";
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../services/hooks/useModal";
 export default function ListAccessorys() {
     const { showModal,onChangeStatusModal } = useModal();
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import useModal from "../../../hooks/useModal";
+import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import styles from "./styles.module.scss";
 
