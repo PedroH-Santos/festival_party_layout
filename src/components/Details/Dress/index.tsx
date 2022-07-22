@@ -15,7 +15,7 @@ export default function InformationDress({dress,rentals} : InformationDressProps
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.topInformation}`}>
-                <Image src={`http://localhost:3333/images/${dress?.images[0].image}`} alt={dress?.images[0].id} className={styles.image} width={360} height={360} />
+                <Image src={`http://localhost:3333/images/dress/${dress?.images[0].image}`} alt={dress?.images[0].id} className={styles.image} width={360} height={360} />
                 <div>
                     <h2> Próximos Aluguéis </h2>
                     {rentalLimit?.map((rental) => {

@@ -14,7 +14,9 @@ export async function getCategorysDress(): Promise<CategoryDress[]> {
 
 
 export function useCategoryDress() {
-    return useQuery([`categorysDress`], async () => await getCategorysDress());
+    return useQuery([`categorysDress`], async () => await getCategorysDress(),{
+        staleTime: 1000 * 10 * 60,
+    });
 
 
 }

@@ -39,13 +39,19 @@ export default function ListDresses({ dresses }: ListDressesProps) {
                             return (
 
                                 <tr className={`${styles.item}`} key={dress.id}>
-                                    <td> <Image src={`http://localhost:3333/images/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td> <Image src={`http://localhost:3333/images/dress/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td>{dress.name} </td>
                                     <td>R$ {dress.price} </td>
                                     <td>{dress.category.name} </td>
                                     <td>
-                                        <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                        
+                                        <Link href={`/update/dress/${dress.id}`}>
+                                            <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                        </Link>
+                                        
                                         <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
+                                        <ModalDelete elementName={`${dress?.name}`} elementId={`${dress?.id}`} route={`/dress`} resetList={`dresses`}setIsOpen={onChangeStatusModal} isOpen={showModal} />
+                                        
                                         <Link href={`/detail/dress/${dress.id}`}>
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                         </Link>
@@ -67,7 +73,6 @@ export default function ListDresses({ dresses }: ListDressesProps) {
                 </Link>
             </div>
 
-            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal} />
         </>
     )
 } 

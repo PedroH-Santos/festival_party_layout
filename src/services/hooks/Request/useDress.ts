@@ -16,7 +16,9 @@ export async function getDress({ id } : IRequest): Promise<Dress> {
 
 
 export function useDress({ id }: IRequest) {
-    return useQuery([`dress`,{id}], async () => await getDress({id}));
+    return useQuery([`dress`,{id}], async () => await getDress({id}),{
+        staleTime: 1000 * 10 * 60,
+    });
 
 
 }

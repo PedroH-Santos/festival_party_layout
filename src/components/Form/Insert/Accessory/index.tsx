@@ -17,20 +17,20 @@ import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import { TailSpin } from 'react-loader-spinner';
 
-interface CreateDressFormData {
+interface CreateAccessoryFormData {
     name: string;
     price: number;
     category_id: string;
     image: FileList;
 }
 
-interface FormDressProps {
-    categorys: CategoryDress[] | undefined,
+interface FormAccessoryProps {
+    categorys: AccessoryCategory[] | undefined,
 }
 
 
 
-const newDressFormValidationSchema = zod.object({
+const newAccessoryFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
     price: zod.number().nonnegative("O valor deve ser positivo").min(1, 'O valor deve ser maior do que 1'),
     category_id: zod.string().min(1, 'Escolha uma categoria').uuid('Id de categoria inválido'),
@@ -38,15 +38,15 @@ const newDressFormValidationSchema = zod.object({
 })
 
 
-export default function FormDress({ categorys }: FormDressProps) {
+export default function FormAccessory({ categorys }: FormAccessoryProps) {
 
 
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
-    let [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateDressFormData>({
-        resolver: zodResolver(newDressFormValidationSchema),
+    const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateAccessoryFormData>({
+        resolver: zodResolver(newAccessoryFormValidationSchema),
         defaultValues: {
             category_id: '',
             name: '',
@@ -54,21 +54,21 @@ export default function FormDress({ categorys }: FormDressProps) {
             image: undefined,
         }
     });
-    const createDresss = useMutation(async (dress: CreateDressFormData) => {
+    const createAccessorys = useMutation(async (accessory: CreateAccessoryFormData) => {
         try {
-            const response = await api.post('/dress', {
-                name: dress.name, price: dress.price, category_id: dress.category_id
+            const response = await api.post('/accessory', {
+                name: accessory.name, price: accessory.price, category_id: accessory.category_id
             });
-            const newDress: Dress = response.data;
+            const newAccessory: Accessory = response.data;
             const formData = new FormData();
-            formData.append('images', dress.image[0]);
+            formData.append('images', accessory.image[0]);
 
-            await api.post(`dress/images/${newDress.id}`, formData, {
+            await api.post(`accessory/images/${newAccessory.id}`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 }
             })
-            setSuccess("Vestido cadastrado com sucesso !");
+            setSuccess("Accessório cadastrado com sucesso !");
             return response;
         } catch (error: any) {
             setErrors(error.response.data.message);
@@ -77,21 +77,21 @@ export default function FormDress({ categorys }: FormDressProps) {
 
     }, {
         onSuccess: () => {
-            queryClient.invalidateQueries('dress');
+            queryClient.invalidateQueries('accessory');
             reset();
         }
     }
     )
-    
-    async function onInsertNewDress(form: CreateDressFormData) {
+
+    async function onInsertNewAccessory(form: CreateAccessoryFormData) {
         setLoading(true);
-        const dress: CreateDressFormData = {
+        const accessory: CreateAccessoryFormData = {
             name: form.name,
             category_id: form.category_id,
             price: form.price,
             image: form.image
         }
-        await createDresss.mutateAsync(dress);
+        await createAccessorys.mutateAsync(accessory);
         setLoading(false);
 
     }
@@ -100,7 +100,7 @@ export default function FormDress({ categorys }: FormDressProps) {
     return (
         <>
             <div className={`${styles.container}`}>
-                <form onSubmit={handleSubmit(onInsertNewDress)} method="post" encType="multipart/form-data">
+                <form onSubmit={handleSubmit(onInsertNewAccessory)} method="post" encType="multipart/form-data">
                     <div className={`${styles.inputImage}`} >
 
                         <File name={"image"} text={"Imagem"} register={register} />
@@ -130,7 +130,7 @@ export default function FormDress({ categorys }: FormDressProps) {
                     </div>
                     {loading ? (
                         <button type="button" className={`${styles.insertNew}`}><TailSpin color="#FFFFFF" height={25} width={50} /></button>
-                        ) : (
+                    ) : (
                         <button type="submit" className={`${styles.insertNew}`}>Cadastrar</button>
                     )}
                     {error && (

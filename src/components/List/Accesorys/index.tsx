@@ -4,8 +4,14 @@ import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ModalDelete from "../../Modal/Delete";
 import useModal from "../../../services/hooks/useModal";
-export default function ListAccessorys() {
-    const { showModal,onChangeStatusModal } = useModal();
+import Image from "next/image";
+
+interface ListAccessorysProps {
+    accessories: Accessory[] | undefined;
+}
+
+export default function ListAccessorys({ accessories }: ListAccessorysProps) {
+    const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
@@ -22,21 +28,37 @@ export default function ListAccessorys() {
                         </tr>
                     </thead>
                     <tbody className={`${styles.body}`}>
-                        <tr className={`${styles.item}`}>
-                            <td><img src="/images/colar.jpg" /> </td>
-                            <td>123 </td>
-                            <td>R$ 20,00 </td>
-                            <td>Listrado </td>
-                            <td>
-                
-                                    <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
-                                    <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal}/>
-                                    <Link href={"/detail/accessory"}>
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
-                                </Link>
-                            </td>
-                        </tr>
+                        {accessories?.map((accessory) => {
+                            
+                            const firstImage = (accessory.images.length > 0) ? accessory.images[0].image : '';
+                            const firstId = (accessory.images.length > 0) ? accessory.images[0].id : 'Sem Foto';
+                            return (
+
+                                <tr className={`${styles.item}`} key={accessory.id}>
+                                    <td> <Image src={`http://localhost:3333/images/accessory/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td>{accessory.name} </td>
+                                    <td>R$ {accessory.price} </td>
+                                    <td>{accessory.category.name} </td>
+                                    <td>
+
+                                        <Link href={`/update/accessory/${accessory.id}`}>
+                                            <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                        </Link>
+
+                                        <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
+                                        <ModalDelete elementName={`${accessory?.name}`} elementId={`${accessory?.id}`} route={`/accessory`} resetList={`accessories`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
+
+                                        <Link href={`/detail/accessory/${accessory.id}`}>
+                                            <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                        </Link>
+                                    </td>
+                                </tr>
+
+                            )
+                        })}
+
                     </tbody>
+
 
 
                 </table>
@@ -47,7 +69,6 @@ export default function ListAccessorys() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
-            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
 
         </>
     )

@@ -12,9 +12,10 @@ interface Option {
 interface SelectProps {
     name: string;
     text: string;
-    options: Option[];
+    options: Option[] | undefined;
     register?: any;
     control?: any;
+    currentValue?: string;
 }
 
 interface OptionTrait {
@@ -23,7 +24,7 @@ interface OptionTrait {
 }
 
 
-export default function SelectTrait({ name, text, options, register, control }: SelectProps) {
+export default function SelectTrait({ name, text, options, register, control, currentValue }: SelectProps) {
 
     const colourStyles: StylesConfig = {
         singleValue: (provided) => ({
@@ -56,8 +57,8 @@ export default function SelectTrait({ name, text, options, register, control }: 
         }),
     };
 
-    let optionsTrait: any = [];
-    options.map(option => {
+    let optionsTrait: OptionTrait[] = [];
+    options?.map(option => {
         const trait: OptionTrait = {
             value: option.id,
             label: option.name
@@ -73,13 +74,22 @@ export default function SelectTrait({ name, text, options, register, control }: 
                 rules={register}
                 render={({ field: { onChange } }) => (
                     <Select
+                        id={name}
                         onChange={(val: any) => onChange(val.value)}
                         options={optionsTrait}
                         styles={colourStyles}
+                        defaultValue={
+                            optionsTrait.filter((option: OptionTrait) => {
+                                if(currentValue){
+                                    return option.value === currentValue;
+                                }
+                                return null;
+                            })
+                        }
                     />
                 )}
             />
-            
+
         </>
     )
 }

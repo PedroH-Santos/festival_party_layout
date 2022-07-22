@@ -20,7 +20,9 @@ export async function getRentals({dress_id }: IRequest): Promise<Rental[]> {
 
 
 export function useRentals({dress_id}: IRequest) {
-    return useQuery([`rentalsDressId`,{dress_id}], async () => await getRentals({dress_id}));
+    return useQuery([`rentalsDressId`,{dress_id}], async () => await getRentals({dress_id}),{
+        staleTime: 1000 * 10 * 60,
+    });
 
 
 }

@@ -7,9 +7,10 @@ interface FileProps {
     name: string;
     text: string;
     register?: any;
+    currentValue?: string;
 }
 
-export default function File({ name, text, register }: FileProps) {
+export default function File({ name, text, register,currentValue }: FileProps) {
     const [file, useFile] = useState<File | null>();
     const hiddenFileInput = useRef<HTMLInputElement | null>(null);
     const { ref } = register('image');
@@ -47,7 +48,7 @@ export default function File({ name, text, register }: FileProps) {
                         hiddenFileInput.current = e
                     }}
                 />
-                <p> Atual: {file?.name}  </p>
+                <p> Atual: {(file?.name) ? file?.name : currentValue}  </p>
             </a>
 
         </>
