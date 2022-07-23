@@ -3,11 +3,6 @@ import styles from "./styles.module.scss";
 import Select, { OptionsOrGroups, StylesConfig } from "react-select";
 import { Controller } from "react-hook-form";
 
-interface Option {
-    id: string;
-    name: string;
-}
-
 
 interface SelectProps {
     name: string;
@@ -18,10 +13,7 @@ interface SelectProps {
     currentValue?: string;
 }
 
-interface OptionTrait {
-    value: string;
-    label: string;
-}
+
 
 
 export default function SelectTrait({ name, text, options, register, control, currentValue }: SelectProps) {
@@ -57,9 +49,9 @@ export default function SelectTrait({ name, text, options, register, control, cu
         }),
     };
 
-    let optionsTrait: OptionTrait[] = [];
+    let optionsTrait: OptionsTrait[] = [];
     options?.map(option => {
-        const trait: OptionTrait = {
+        const trait: OptionsTrait = {
             value: option.id,
             label: option.name
         }
@@ -79,7 +71,7 @@ export default function SelectTrait({ name, text, options, register, control, cu
                         options={optionsTrait}
                         styles={colourStyles}
                         defaultValue={
-                            optionsTrait.filter((option: OptionTrait) => {
+                            optionsTrait.filter((option: OptionsTrait) => {
                                 if(currentValue){
                                     return option.value === currentValue;
                                 }

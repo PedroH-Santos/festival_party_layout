@@ -1,33 +1,38 @@
 
 import styles from "./styles.module.scss";
 
-export default function InformationDress() {
+
+interface InformationTransactionProps {
+    transaction: Transaction | undefined;
+}
+
+export default function InformationTransaction({transaction}: InformationTransactionProps) {
 
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.information}`}>
                 <div>
                     <p> Valor : </p>
-                    <span> R$ 13,90  </span>
+                    <span> <>{transaction?.value}</>  </span>
                 </div>
                 <div>
                     <p>  Tipo : </p>
-                    <span> Depósito </span>
+                    <span> {transaction?.type} </span>
                 </div>
                 <div>
                     <p> Origem : </p>
-                    <span> Vestidos  </span>
+                    <span> {transaction?.origin}  </span>
                 </div>
                 <div>
                     <p> Criação : </p>
-                    <span> 27/06/2022  </span>
+                    <span> <>{transaction?.created_at}</> </span>
                 </div>
 
             </div>
             <div className={`${styles.information}`}>
                 <div>
                     <p> Descrição : </p>
-                    <span> Aluguél feito  </span>
+                    <span> {transaction?.description}  </span>
                 </div>
             </div>
         </div>

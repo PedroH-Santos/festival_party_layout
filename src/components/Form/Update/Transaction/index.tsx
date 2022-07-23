@@ -22,6 +22,7 @@ import { TailSpin } from "react-loader-spinner";
 interface FormTransactionProps {
     typeOptions: Option[],
     originOptions: Option[],
+    transaction: Transaction | undefined;
 }
 
 interface CreateTransactionFormData {
@@ -39,7 +40,7 @@ const newTransactionFormValidationSchema = zod.object({
 
 })
 
-export default function FormTransaction({ typeOptions, originOptions }: FormTransactionProps) {
+export default function FormUpdateTransaction({ typeOptions, originOptions, transaction }: FormTransactionProps) {
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
     let [loading, setLoading] = useState(false);
@@ -47,31 +48,29 @@ export default function FormTransaction({ typeOptions, originOptions }: FormTran
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateTransactionFormData>({
         resolver: zodResolver(newTransactionFormValidationSchema),
         defaultValues: {
-            origin: '',
-            type: '',
-            value: 0,
-            description: '',
+            origin: transaction?.origin,
+            type: transaction?.type,
+            value: transaction?.value,
+            description: transaction?.description,
         }
     });
 
 
 
-    const createTransaction = useMutation(async (transaction: CreateTransactionFormData) => {
+    const updateTransaction = useMutation(async (transactionUpdate: CreateTransactionFormData) => {
         try {
             const response = await api.post('/transaction', {
-                ...transaction
+                ...transactionUpdate, id: transaction?.id,
             });
-            setSuccess("Transação cadastrada com sucesso !");
+            setSuccess("Transação atualizado com sucesso !");
             return response;
         } catch (error: any) {
             setErrors(error.response.data.message);
-            reset();
         }
 
     }, {
         onSuccess: () => {
             queryClient.invalidateQueries('transaction');
-            reset();
         }
     }
     )
@@ -82,9 +81,9 @@ export default function FormTransaction({ typeOptions, originOptions }: FormTran
             value: form.value,
             type: form.type,
             origin: form.origin,
-            description: form.description
+            description: form.description,
         }
-        await createTransaction.mutateAsync(transaction);
+        await updateTransaction.mutateAsync(transaction);
         setLoading(false);
 
     }
@@ -97,16 +96,16 @@ export default function FormTransaction({ typeOptions, originOptions }: FormTran
                 <form onSubmit={handleSubmit(onInsertNewTransaction)} method="post" >
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Select options={originOptions} text={"Origem"} name="origin" register={register} control={control} />
+                            <Select options={originOptions} text={"Origem"} name="origin" register={register} control={control} currentValue={transaction?.origin} />
                             <LabelValidate message={errors.origin?.message} />
 
                         </div>
                         <div>
-                            <Select options={typeOptions} text={"Tipo"} name="type" register={register} control={control} />
+                            <Select options={typeOptions} text={"Tipo"} name="type" register={register} control={control} currentValue={transaction?.type} />
                             <LabelValidate message={errors.type?.message} />
 
                         </div>
-                        
+
 
                     </div>
                     <div className={`${styles.containerInputs}`}>
@@ -123,7 +122,7 @@ export default function FormTransaction({ typeOptions, originOptions }: FormTran
                     </div>
                     {loading ? (
                         <button type="button" className={`${styles.insertNew}`}><TailSpin color="#FFFFFF" height={25} width={50} /></button>
-                        ) : (
+                    ) : (
                         <button type="submit" className={`${styles.insertNew}`}>Cadastrar</button>
                     )}
                     {error && (

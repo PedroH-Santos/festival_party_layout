@@ -5,9 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 
+interface ListTransactionsProps {
+    transactions: Transaction[] | undefined;
+}
 
-export default function ListTransactions() {
-    const { showModal,onChangeStatusModal } = useModal();
+
+export default function ListTransactions({ transactions }: ListTransactionsProps) {
+    const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
@@ -23,19 +27,30 @@ export default function ListTransactions() {
                         </tr>
                     </thead>
                     <tbody className={`${styles.body}`}>
-                        <tr className={`${styles.item}`}>
-                            <td>Deposit </td>
-                            <td>R$20,O0 </td>
-                            <td>RENTAL_DRESS </td>
-                            <td>
-                                <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
-                                <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal}/>
-                                <Link href={`/detail/transaction`} >
-                                    <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
-                                </Link>
+                        {transactions?.map(transaction => {
+                            return (
+                                <>
+                                    <tr className={`${styles.item}`}>
+                                        <td>{transaction.type} </td>
+                                        <td> <>R$ {transaction.value} </></td>
+                                        <td>{transaction.origin} </td>
+                                        <td>
+                                            <Link href={`/update/transaction/${transaction.id}`}>
+                                                <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                            </Link>
+                                                                                        <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
+                                            <ModalDelete elementName={transaction.id} elementId={transaction.id} isOpen={showModal} resetList={"transactions"} route={'/transaction'} setIsOpen={onChangeStatusModal} />
 
-                            </td>
-                        </tr>
+                                            <Link href={`/detail/transaction/${transaction.id}`} >
+                                                <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
+                                            </Link>
+
+                                        </td>
+                                    </tr>
+                                </>
+                            )
+                        })}
+
                     </tbody>
 
 
@@ -46,7 +61,6 @@ export default function ListTransactions() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
-            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
 
         </>
     )
