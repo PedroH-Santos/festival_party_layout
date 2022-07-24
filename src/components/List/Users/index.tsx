@@ -1,10 +1,18 @@
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import styles from "./styles.module.scss";
 
-export default function ListUsers() {
-    const { showModal,onChangeStatusModal } = useModal();
+
+interface ListUsersProps {
+    users: User[] | undefined;
+}
+
+
+export default function ListUsers({ users }: ListUsersProps) {
+    const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
@@ -19,11 +27,24 @@ export default function ListUsers() {
                         </tr>
                     </thead>
                     <tbody className={`${styles.body}`}>
-                        <tr className={`${styles.item}`}>
-                            <td>Marlene </td>
-                            <td>marlene@gmail.com </td>
-                            <td> </td>
-                        </tr>
+                        {users?.map((user) => {
+                            return (
+                                <tr className={`${styles.item}`} key={user.id}>
+                                    <td>{user.name} </td>
+                                    <td>{user.email} </td>
+                                    <td>
+
+                                        <Link href={`/update/user/${user.id}`}>
+                                            <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
+                                        </Link>
+                                        <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
+                                        <ModalDelete elementName={`${user?.name}`} elementId={`${user?.id}`} route={`/user`} resetList={`users`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
+
+                                    </td>
+                                </tr>
+                            )
+                        })}
+
                     </tbody>
 
 
@@ -35,7 +56,6 @@ export default function ListUsers() {
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>
-            <ModalDelete nameDelete="Vestido Rozado" setIsOpen={onChangeStatusModal} isOpen={showModal}  />
 
         </>
     )

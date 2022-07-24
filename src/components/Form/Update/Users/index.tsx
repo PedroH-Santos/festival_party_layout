@@ -14,7 +14,6 @@ import { TailSpin } from "react-loader-spinner";
 import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import Password from "../../Inputs/Password";
-import Email from "../../Inputs/Email";
 
 const newUserFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
@@ -28,8 +27,12 @@ interface CreateUserFormData {
     email: string;
 }
 
+interface FormUpdateUserProps {
+    user: User | undefined;
+}
 
-export default function FormUser() {
+
+export default function FormUpdateUser({ user }: FormUpdateUserProps) {
 
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
@@ -38,20 +41,20 @@ export default function FormUser() {
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateUserFormData>({
         resolver: zodResolver(newUserFormValidationSchema),
         defaultValues: {
-            password: '',
-            name: '',
-            email: '',
+            password: user?.password,
+            name: user?.name,
+            email: user?.email,
         }
     });
 
 
-    const createUser = useMutation(async (user: CreateUserFormData) => {
+    const createUser = useMutation(async (userUpdate: CreateUserFormData) => {
         try {
             const response = await api.post('/user', {
-                ...user
+                ...userUpdate, id: user?.id
             });
 
-            setSuccess("Usuário cadastrado com sucesso !");
+            setSuccess("Usuário atualizado com sucesso !");
             return response;
         } catch (error: any) {
             setErrors(error.response.data.message);
@@ -66,7 +69,7 @@ export default function FormUser() {
     }
     )
 
-    async function onInsertNewUser(form: CreateUserFormData) {
+    async function onUpdateUser(form: CreateUserFormData) {
         setLoading(true);
         const user: CreateUserFormData = {
             name: form.name,
@@ -80,7 +83,7 @@ export default function FormUser() {
     return (
         <>
             <div className={`${styles.container}`}>
-                <form onSubmit={handleSubmit(onInsertNewUser)} method="post" >
+                <form onSubmit={handleSubmit(onUpdateUser)} method="post" >
                     <div className={`${styles.containerInputs}`}>
                         <div>
                             <Text text="Nome" style="orange" name={'name'} register={register} />
@@ -102,7 +105,7 @@ export default function FormUser() {
                     {loading ? (
                         <button type="button" className={`${styles.insertNew}`}><TailSpin color="#FFFFFF" height={25} width={50} /></button>
                     ) : (
-                        <button type="submit" className={`${styles.insertNew}`}>Cadastrar</button>
+                        <button type="submit" className={`${styles.insertNew}`}>Atualizar</button>
                     )}
                     {error && (
                         <div className={`${styles.message}`}>
