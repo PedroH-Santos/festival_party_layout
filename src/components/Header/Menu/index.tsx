@@ -11,11 +11,18 @@ export default function Menu() {
                     <ItemSubMenu name="Accessórios" href="/list/rentalsAccessories" />
 
                 </ItemMenu>
-                <ItemMenu name="Vestidos" href="/list/dresses" haveSubMenu={false} />
-                <ItemMenu name="Acessórios" href="/list/accessories" haveSubMenu={false} />
+                <ItemMenu name="Vestidos"  haveSubMenu={true}>
+                <ItemSubMenu name="Listagem" href="/list/dresses" />
+                    <ItemSubMenu name="Categorias" href="/list/dress/categories" />
+                </ItemMenu>
+                <ItemMenu name="Acessórios"  haveSubMenu={true}>
+                <ItemSubMenu name="Listagem" href="/list/accessories" />
+                    <ItemSubMenu name="Categorias" href="/list/accessories/categories" />
+                </ItemMenu>
                 <ItemMenu name="Finanças" href="/list/transactions" haveSubMenu={false} />
                 <ItemMenu name="Usuários" href="/list/users" haveSubMenu={false} />
                 <ItemMenu name="Entregas" href="/list/deliveries" haveSubMenu={false} />
+                <ItemMenu name="Clientes" href="/list/clients" haveSubMenu={false} />
 
             </nav>
         </div>

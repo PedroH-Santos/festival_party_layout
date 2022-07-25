@@ -43,7 +43,7 @@ export default function FormDress({ categorys }: FormDressProps) {
 
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
-    let [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateDressFormData>({
         resolver: zodResolver(newDressFormValidationSchema),

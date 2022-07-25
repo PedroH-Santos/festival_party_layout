@@ -4,64 +4,80 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 
-export default function InformationDress() {
 
+interface InformationDressProps {
+    rental: Rental | undefined;
+    origin: string;
+}
+
+export default function InformationRental({ rental,origin }: InformationDressProps) {
+    const pathImage = (origin == 'dress') ? '/dress' : '/accessory';
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.information}`}>
                 <div className={`${styles.leftInformation}`}>
                     <div>
                         <p>  Valor : </p>
-                        <span> R$ 13,50  </span>
+                        <span> <>R$ {rental?.value}</>  </span>
                     </div>
                     <div>
                         <p> Categoria : </p>
-                        <span> Rozado  </span>
+                        <span> {rental?.product.category.name}  </span>
                     </div>
                     <div>
                         <p> Data Inicial : </p>
-                        <span> 27/06/2022  </span>
+                        <span> <>{rental?.start_date} </> </span>
                     </div>
                     <div>
                         <p> Expectativa de Entrega : </p>
-                        <span> 27/06/2022  </span>
+                        <span> <>{rental?.expected_delivery_date} </> </span>
                     </div>
                     <div>
                         <p> Data de Entrega : </p>
-                        <span> 27/06/2022  </span>
+                        <span> <>{rental?.end_date}</>  </span>
                     </div>
                     <div>
                         <p> Criação : </p>
-                        <span> 27/06/2022  </span>
+                        <span> <>{rental?.created_at}</>  </span>
                     </div>
                     <div>
                         <p> Descrição : </p>
-                        <span> Aluguél feito  </span>
+                        <span> <>{rental?.description}</> </span>
                     </div>
                 </div>
                 <div className={`${styles.rightInformation}`}>
                     <div>
                         <p> Produto : </p>
-                        <span> Vestido Rozado  </span>
+                        <span> {rental?.product?.name}  </span>
                     </div>
                     <div>
-                        <Image src="/images/colar.jpg" alt="Logo" className={styles.image} width={240} height={240} />
+                     <Image src={`http://localhost:3333/images/${pathImage}/${rental?.product?.images[0].image}`} alt={rental?.product?.images[0]?.id} width={240} height={240} />
+
 
                     </div>
                     <div>
                         <p>  Usuário : </p>
-                        <span> Marlene </span>
+                        <span> {rental?.user?.name} </span>
                     </div>
-                    <div>
-                        <FontAwesomeIcon icon={faLock}  className={`${styles.closeStatus}`}/>
-                        <p>  Status : </p>
-                        <span> Fechado </span>
-                    </div>
-                    <div>
-                        <FontAwesomeIcon icon={faLockOpen} className={`${styles.openStatus}`} />
-                        <p>  Status : </p>
-                        <span> Aberto </span>
-                    </div>
+                    {rental?.end_date != null ?
+                        (
+                            <div>
+                                <FontAwesomeIcon icon={faLock} className={`${styles.closeStatus}`} />
+                                <p>  Status : </p>
+                                <span> Fechado </span>
+                            </div>
+                        )
+                        :
+                        (
+                            <div>
+                                <FontAwesomeIcon icon={faLockOpen} className={`${styles.openStatus}`} />
+                                <p>  Status : </p>
+                                <span> Aberto </span>
+                            </div>
+                        )
+                    }
+
+
                 </div>
             </div>
         </div>

@@ -12,4 +12,6 @@ interface Rental {
     created_at: Date;
     updated_at: Date;
     user: User;
+    ?product: Dress | Accessory;
+    client: Client;
 }
