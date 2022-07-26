@@ -9,9 +9,10 @@ interface Rental {
     expected_delivery_date: Date;
     dress_id: string;  
     user_id: string;
+    client_id: string;
     created_at: Date;
     updated_at: Date;
     user: User;
-    ?product: Dress | Accessory;
+    product: Dress | Accessory;
     client: Client;
 }

@@ -1,11 +1,11 @@
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import Body from "../../components/Body";
-import Header from "../../components/Header";
-import ListDresses from "../../components/List/Dresses";
-import Title from "../../components/Title";
-import { getDresses, useDresses } from "../../services/hooks/Request/useDresses";
+import Body from "../../../components/Body";
+import Header from "../../../components/Header";
+import ListDresses from "../../../components/List/Dresses";
+import Title from "../../../components/Title";
+import { getDresses, useDresses } from "../../../services/hooks/Request/useDresses";
  
 export default function Dresses() {
 

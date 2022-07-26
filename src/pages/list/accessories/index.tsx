@@ -1,11 +1,11 @@
 import { faHatCowboy } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import Body from "../../components/Body";
-import Header from "../../components/Header";
-import ListAccessorys from "../../components/List/Accesorys";
-import Title from "../../components/Title";
-import { getAccessories, useAccessories } from "../../services/hooks/Request/useAccessories";
+import Body from "../../../components/Body";
+import Header from "../../../components/Header";
+import ListAccessorys from "../../../components/List/Accesorys";
+import Title from "../../../components/Title";
+import { getAccessories, useAccessories } from "../../../services/hooks/Request/useAccessories";
 
 export default function Accessorys() {
     

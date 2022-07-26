@@ -4,8 +4,7 @@ import { api } from "../../api";
 
 
 
-
-export async function getCategorysDress(): Promise<CategoryDress[]> {
+export async function getDressesCategories(): Promise<CategoryDress[]> {
 
     const response = await api.get<CategoryDress[]>(`/dress/category`).then(response => response.data);
     return response;
@@ -13,8 +12,8 @@ export async function getCategorysDress(): Promise<CategoryDress[]> {
 
 
 
-export function useCategoryDress() {
-    return useQuery([`categorysDress`], async () => await getCategorysDress(),{
+export function useDressesCategories() {
+    return useQuery([`dressesCategories`], async () => await getDressesCategories(),{
         staleTime: 1000 * 10 * 60,
     });
 

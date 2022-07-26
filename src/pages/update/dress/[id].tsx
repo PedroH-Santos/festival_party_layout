@@ -9,8 +9,8 @@ import FormUpdateDress from "../../../components/Form/Update/Dress";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import { api } from "../../../services/api";
-import { getCategorysDress, useCategoryDress } from "../../../services/hooks/Request/useCategoryDress";
 import { useDress, getDress } from "../../../services/hooks/Request/useDress";
+import { getDressesCategories, useDressesCategories } from "../../../services/hooks/Request/useDressesCategories";
 import { getRentals, useRentals } from "../../../services/hooks/Request/useRentals";
 
 interface IParams {
@@ -21,7 +21,7 @@ interface IParams {
 export default function UpdateDress({ id }: IParams) {
 
     const { data: dress, error } = useDress({ id });
-    const { data: categorys, error: errorCategory } = useCategoryDress();
+    const { data: categorys, error: errorCategory } = useDressesCategories();
 
 
     return (
@@ -41,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     const { id } = params as unknown as IParams;
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery<Dress>(['dress', { id }], async () => await getDress({ id }));
-    await queryClient.prefetchQuery<CategoryDress[]>([`categorysDress`], async () => await getCategorysDress());
+    await queryClient.prefetchQuery<CategoryDress[]>([`dressesCategories`], async () => await getDressesCategories());
 
     return {
         props: {

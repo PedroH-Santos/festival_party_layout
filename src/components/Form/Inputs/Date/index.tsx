@@ -7,19 +7,15 @@ interface DateInputProps {
     name: string;
     text: string;
     register?: any;
+    currentValue?: Date;
 }
 
-export default function DateInput({ name, text, register }: DateInputProps) {
+export default function DateInput({ name, text, register,currentValue }: DateInputProps) {
     const validation = (register) ? { ...register(name) } : '';
-const [a,setA] = useState('');
-    const onChangeDate = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-        const newDate = moment(target.value).format('YYYY-MM-DD HH:MM:SS');
-        setA(newDate);
-              };
     return (
-        <>
+        <>  
             <label className={styles.labelOrange}> {text} </label>
-            <input type={'datetime-local'}   className={styles.input} {...validation} onChange={(e) => onChangeDate(e)} />
+            <input type={'datetime-local'}   value={moment(currentValue).format('yyyy-MM-DDThh:mm')} className={styles.input} {...validation}  />
         </>
     )
 }

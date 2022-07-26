@@ -16,9 +16,10 @@ export async function getRental({ id } : IRequest): Promise<Rental> {
 
 
 export function useRental({ id }: IRequest) {
-    return useQuery([`rental`,{id}], async () => await getRental({id}),{
+    const response = useQuery([`rental`,{id}], async () => await getRental({id}),{
         staleTime: 1000 * 10 * 60,
     });
+    return response;
 
 
 }

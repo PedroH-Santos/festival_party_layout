@@ -1,11 +1,11 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import Body from "../../components/Body";
-import FormAccessory from "../../components/Form/Insert/Accessory";
-import Header from "../../components/Header";
-import Title from "../../components/Title";
-import { getCategorysAccessory, useCategoryAccessory } from "../../services/hooks/Request/useCategoryAccessory";
+import Body from "../../../components/Body";
+import FormAccessory from "../../../components/Form/Insert/Accessory";
+import Header from "../../../components/Header";
+import Title from "../../../components/Title";
+import { getCategorysAccessory, useCategoryAccessory } from "../../../services/hooks/Request/useCategoryAccessory";
 
 
 export default function InsertAccessory() {
