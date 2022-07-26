@@ -9,12 +9,12 @@ import Image from "next/image";
 interface ListRentalsProps {
     rentals: Rental[] | undefined;
     origin: string;
+    resetList: string;
 }
 
 
-export default function ListRentals({ rentals, origin }: ListRentalsProps) {
+export default function ListRentals({ rentals, origin,resetList }: ListRentalsProps) {
     const { showModal, onChangeStatusModal } = useModal();
-    const pathImage = (origin == 'dress') ? '/dress' : '/accessory';
     return (
         <>
             <div className={`${styles.container}`}>
@@ -38,21 +38,21 @@ export default function ListRentals({ rentals, origin }: ListRentalsProps) {
                             return (
                                 <tr className={`${styles.item}`} key={rental?.id}>
 
-                                    <td> <Image src={`http://localhost:3333/images/${pathImage}/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td> <Image src={`http://localhost:3333/images/${origin}/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td> {rental.client.name} </td>
                                     <td><>R$ {rental.value}</> </td>
                                     <td><>{rental.start_date}</> </td>
                                     <td><>{rental.expected_delivery_date}</> </td>
                                     <td>
 
-                                        <Link href={`/update/rental/${rental.id}`}>
+                                        <Link href={`/update/rental/${origin}/${rental.id}`}>
                                             <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                         </Link>
 
                                         <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
-                                        <ModalDelete elementName={`${rental?.product?.name}`} elementId={`${rental?.id}`} route={`/rental/dress`} resetList={`rentalsDresses`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
+                                        <ModalDelete elementName={`${rental?.description}`} elementId={`${rental?.id}`} route={`/rental/${origin}`} resetList={`${resetList}`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
 
-                                        <Link href={`/detail/rental/${rental.id}`}>
+                                        <Link href={`/detail/rental/${origin}/${rental.id}`}>
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                         </Link>
 
@@ -73,7 +73,7 @@ export default function ListRentals({ rentals, origin }: ListRentalsProps) {
             </div>
 
             <div className={`${styles.button}`}>
-                <Link href={`/insert/rental`} >
+                <Link href={`/insert/rental/${origin}`} >
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>

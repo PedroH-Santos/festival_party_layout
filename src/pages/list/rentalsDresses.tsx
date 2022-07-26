@@ -16,7 +16,7 @@ export default function RentalsDresses() {
             <Body>
                 <>
                     <Title icon={faCalendar} title="Alúgueis de Vestidos" size="lg" />
-                    <ListRentals rentals={rentals} origin={'dress'} />
+                    <ListRentals rentals={rentals} origin={'dress'} resetList={`rentalsDresses`}/>
                 </>
             </Body>
         </>

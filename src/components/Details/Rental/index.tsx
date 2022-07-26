@@ -22,7 +22,7 @@ export default function InformationRental({ rental,origin }: InformationDressPro
                     </div>
                     <div>
                         <p> Categoria : </p>
-                        <span> {rental?.product.category.name}  </span>
+                        <span> {rental?.product.category?.name}  </span>
                     </div>
                     <div>
                         <p> Data Inicial : </p>

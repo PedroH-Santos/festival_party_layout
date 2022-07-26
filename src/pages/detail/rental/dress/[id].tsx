@@ -1,11 +1,12 @@
 import { faCircleDollarToSlot } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient } from "react-query";
-import Body from "../../../components/Body";
-import InformationRental from "../../../components/Details/Rental";
-import Header from "../../../components/Header";
-import Title from "../../../components/Title";
-import { getRental, useRental } from "../../../services/hooks/Request/useRental";
+import Body from "../../../../components/Body";
+import InformationRental from "../../../../components/Details/Rental";
+import Header from "../../../../components/Header";
+import Title from "../../../../components/Title";
+import { getRental, useRental } from "../../../../services/hooks/Request/useRental";
+
 
 
 
