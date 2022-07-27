@@ -9,7 +9,8 @@ export default function Menu() {
                 <ItemMenu name="Aluguéis" haveSubMenu={true}>
                     <ItemSubMenu name="Vestidos" href="/list/rentalsDresses" />
                     <ItemSubMenu name="Accessórios" href="/list/rentalsAccessories" />
-                    <ItemSubMenu name="Entregas" href="/list/deliveries" />
+                    <ItemSubMenu name="Aluguéis do dia" href="/list/today" />
+                    <ItemSubMenu name="Recebimentos" href="/list/deliveries" />
 
                 </ItemMenu>
                 <ItemMenu name="Vestidos" haveSubMenu={true}>

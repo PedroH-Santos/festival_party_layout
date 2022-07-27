@@ -17,6 +17,7 @@ import LabelValidate from "../../Error/LabelValidate";
 import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import { TailSpin } from "react-loader-spinner";
+import moment from "moment";
 
 interface CreateRentalFormData {
     value: Number;
@@ -24,8 +25,8 @@ interface CreateRentalFormData {
     user_id: string;
     client_id: string;
     description: string;
-    start_date: Date;
-    expected_delivery_date: Date;
+    start_date: string;
+    expected_delivery_date: string;
 }
 
 interface FormRentalProps {
@@ -95,8 +96,8 @@ export default function FormRental({ products, users, clients,origin }: FormRent
             dress_id: form.dress_id,
             user_id: form.user_id,
             description: form.description,
-            expected_delivery_date: form.expected_delivery_date,
-            start_date: form.start_date
+            expected_delivery_date: moment(form?.expected_delivery_date).format(),
+            start_date: moment(form?.start_date).format(), 
         }
         await createDresss.mutateAsync(rental);
         setLoading(false);
@@ -175,4 +176,4 @@ export default function FormRental({ products, users, clients,origin }: FormRent
 
         </>
     )
-} 
+}  

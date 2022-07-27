@@ -1,26 +1,20 @@
-import { faMagnifyingGlass, faPenToSquare, faTrashCan, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import useModal from "../../../../services/hooks/useModal";
+import ModalDelete from "../../../Modal/Delete";
 import styles from "./styles.module.scss";
-import { useState } from "react";
-import ToolTip from "../../ToolTip";
-import useModal from "../../../services/hooks/useModal";
-import ModalDelete from "../../Modal/Delete";
 import Image from "next/image";
 
-interface ListDeliveriesProps {
+interface ListRentalsProps {
     rentals: Rental[] | undefined;
     origin: string;
     resetList: string;
 }
 
-export default function ListDeliveries({rentals, origin,resetList }: ListDeliveriesProps) {
+
+export default function ListRentalsToday({ rentals, origin,resetList }: ListRentalsProps) {
     const { showModal, onChangeStatusModal } = useModal();
-
- 
-
-    
-
     return (
         <>
             <div className={`${styles.container}`}>
@@ -41,9 +35,6 @@ export default function ListDeliveries({rentals, origin,resetList }: ListDeliver
                         {rentals?.map((rental) => {
                             const firstImage = (rental.product?.images?.length > 0) ? rental.product?.images[0]?.image : '';
                             const firstId = (rental.product?.images?.length > 0) ? rental.product?.images[0]?.id : 'Sem Foto';
-                            const isLate = (new Date(rental.expected_delivery_date) < new Date());
-
-
                             return (
                                 <tr className={`${styles.item}`} key={rental?.id}>
 
@@ -67,11 +58,7 @@ export default function ListDeliveries({rentals, origin,resetList }: ListDeliver
 
                                     </td>
                                     <td>
-                                        <button className={`${styles.buttonMark}`}> Entregue </button>
-
-                                        {isLate && (
-                                            <ToolTip icon={faTriangleExclamation} text={'Atrasado'} />
-                                        )}
+                                        <button className={`${styles.buttonMark}`}> Agendado </button>
                                     </td>
                                 </tr>
 
@@ -83,9 +70,7 @@ export default function ListDeliveries({rentals, origin,resetList }: ListDeliver
 
 
                 </table>
-
             </div>
-
 
 
         </>

@@ -61,8 +61,8 @@ export default function FormUpdateRental({ products, users, clients,origin,renta
             user_id: rental?.user_id,
             client_id: rental?.client_id,
             description: rental?.description,
-            start_date: moment(rental?.start_date).format('yyyy-MM-DDThh:mm'),
-            expected_delivery_date: moment(rental?.start_date).format('yyyy-MM-DDThh:mm'),
+            start_date: moment(rental?.start_date).format('yyyy-MM-DDTHH:mm:ss.SSS'),
+            expected_delivery_date: moment(rental?.expected_delivery_date).format('yyyy-MM-DDTHH:mm:ss.SSS'),
         }
     });
 
@@ -90,17 +90,18 @@ export default function FormUpdateRental({ products, users, clients,origin,renta
         setLoading(true);
         setErrors('');
         setSuccess('');
+        console.log(form.expected_delivery_date);
         const rental: CreateRentalFormData = {
             value: form.value,
             client_id: form.client_id,
             dress_id: form.dress_id,
             user_id: form.user_id,
             description: form.description,
-            expected_delivery_date: form.expected_delivery_date,
-            start_date: form.start_date
+            expected_delivery_date: moment(form?.expected_delivery_date).format(),
+            start_date: moment(form?.start_date).format(), 
         }
         await createDresss.mutateAsync(rental);
-        setLoading(false);
+        setLoading(false); 
 
     }
 
@@ -135,7 +136,7 @@ export default function FormUpdateRental({ products, users, clients,origin,renta
                     </div>
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <DateInput name="start_date" text="Dia de início" register={register}  currentValue={rental?.start_date}/>
+                            <DateInput name="start_date" text="Dia de início" register={register}/>
                             <LabelValidate message={errors.start_date?.message} />
 
                         </div>

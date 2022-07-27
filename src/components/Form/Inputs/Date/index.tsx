@@ -7,15 +7,14 @@ interface DateInputProps {
     name: string;
     text: string;
     register?: any;
-    currentValue?: Date;
 }
 
-export default function DateInput({ name, text, register,currentValue }: DateInputProps) {
+export default function DateInput({ name, text, register }: DateInputProps) {
     const validation = (register) ? { ...register(name) } : '';
     return (
         <>  
             <label className={styles.labelOrange}> {text} </label>
-            <input type={'datetime-local'}   value={moment(currentValue).format('yyyy-MM-DDThh:mm')} className={styles.input} {...validation}  />
+            <input type={'datetime-local'}   className={styles.input} {...validation}  />
         </>
     )
 }
