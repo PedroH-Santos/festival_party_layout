@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import ListRentals from "../../components/List/Rentals";
 import Title from "../../components/Title";
 import { getRentalsDresses, useRentalsDresses } from "../../services/hooks/Request/useRentalsDresses";
+import {  parseCookies } from "nookies";
 
 export default function RentalsDresses() {
     const { data: rentals,error  } = useRentalsDresses();
@@ -24,9 +25,19 @@ export default function RentalsDresses() {
 } 
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Rental[]>([`rentalsDresses`], async () => await getRentalsDresses());
+    await queryClient.prefetchQuery<Rental[]>([`rentalsDresses`], async () => await getRentalsDresses(ctx));
   
     return { 
         props: {

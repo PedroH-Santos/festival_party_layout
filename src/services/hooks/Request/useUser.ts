@@ -1,15 +1,18 @@
 import { useQuery } from "react-query";
 import { api } from "../../api";
+import { getAPIClient } from "../../axios";
 
 
 
 interface IRequest {
     id: string | string[] | undefined;
+    ctx?: any;
 } 
 
-export async function getUser({ id } : IRequest): Promise<User> {
+export async function getUser({ id,ctx } : IRequest): Promise<User> {
+    const apiClient = getAPIClient(ctx);
 
-    const response = await api.get<User>(`/user/detail/${id}`).then(response => response.data);
+    const response = await apiClient.get<User>(`/user/detail/${id}`).then(response => response.data);
     return response;
 }
 

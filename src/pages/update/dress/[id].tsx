@@ -12,6 +12,7 @@ import { api } from "../../../services/api";
 import { useDress, getDress } from "../../../services/hooks/Request/useDress";
 import { getDressesCategories, useDressesCategories } from "../../../services/hooks/Request/useDressesCategories";
 import { getRentals, useRentals } from "../../../services/hooks/Request/useRentals";
+import {  parseCookies } from "nookies";
 
 interface IParams {
     id: string;
@@ -37,14 +38,24 @@ export default function UpdateDress({ id }: IParams) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Dress>(['dress', { id }], async () => await getDress({ id }));
-    await queryClient.prefetchQuery<CategoryDress[]>([`dressesCategories`], async () => await getDressesCategories());
+    await queryClient.prefetchQuery<Dress>(['dress', { id }], async () => await getDress({ id,ctx }));
+    await queryClient.prefetchQuery<CategoryDress[]>([`dressesCategories`], async () => await getDressesCategories(ctx));
 
     return {
-        props: {
+        props: { 
             dehydratedState: dehydrate(queryClient),
             id
         }

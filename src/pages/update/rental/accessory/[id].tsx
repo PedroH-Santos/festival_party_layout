@@ -10,6 +10,7 @@ import { getAccessories, useAccessories } from "../../../../services/hooks/Reque
 import { getClients, useClients } from "../../../../services/hooks/Request/useClients";
 import { getRentalAccessories, useRentalAccessories } from "../../../../services/hooks/Request/useRentalAccessories";
 import { getUsers, useUsers } from "../../../../services/hooks/Request/useUsers";
+import {  parseCookies } from "nookies";
 
 
 interface IParams {
@@ -35,14 +36,24 @@ export default function UpdateRental({ id }: IParams) {
   }
 
 
-  export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+  export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }   
+    const { id } = ctx.params as unknown as IParams;
 
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers());
-    await queryClient.prefetchQuery<Accessory[]>([`accessories`], async () => await getAccessories());
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients());
-    await queryClient.prefetchQuery<Rental>(['rentalAccessory', { id }], async () => await getRentalAccessories({ id }));
+    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers(ctx));
+    await queryClient.prefetchQuery<Accessory[]>([`accessories`], async () => await getAccessories(ctx));
+    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
+    await queryClient.prefetchQuery<Rental>(['rentalAccessory', { id }], async () => await getRentalAccessories({ id,ctx }));
 
     return { 
         props: {

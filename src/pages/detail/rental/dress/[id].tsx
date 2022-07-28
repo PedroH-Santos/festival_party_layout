@@ -6,6 +6,7 @@ import InformationRental from "../../../../components/Details/Rental";
 import Header from "../../../../components/Header";
 import Title from "../../../../components/Title";
 import { getRental, useRental } from "../../../../services/hooks/Request/useRental";
+import {  parseCookies } from "nookies";
 
 
 
@@ -31,10 +32,20 @@ export default function DetailRental({id}: IParams) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Rental>(['rental',{id}],async () => await getRental({ id }));
+    await queryClient.prefetchQuery<Rental>(['rental',{id}],async () => await getRental({ id,ctx }));
     return {
         props: {
             dehydratedState: dehydrate(queryClient),

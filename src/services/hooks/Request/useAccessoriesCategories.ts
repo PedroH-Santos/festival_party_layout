@@ -1,12 +1,14 @@
 import { useQuery } from "react-query";
 import { api } from "../../api";
+import { getAPIClient } from "../../axios";
 
 
 
 
-export async function getAccessoriesCategories(): Promise<CategoryDress[]> {
+export async function getAccessoriesCategories(ctx?:any): Promise<CategoryDress[]> {
+    const apiClient = getAPIClient(ctx);
 
-    const response = await api.get<CategoryDress[]>(`/accessory/category`).then(response => response.data);
+    const response = await apiClient.get<CategoryDress[]>(`/accessory/category`).then(response => response.data);
     return response;
 }
 

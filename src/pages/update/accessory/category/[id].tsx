@@ -6,6 +6,7 @@ import Header from "../../../../components/Header";
 import Title from "../../../../components/Title";
 import FormUpdateCategory from "../../../../components/Form/Update/Category";
 import { getAccessoriesCategory, useAccessoriesCategory } from "../../../../services/hooks/Request/useAccessoryCategories";
+import {  parseCookies } from "nookies";
 
 interface IParams {
     id: string;
@@ -30,10 +31,20 @@ export default function UpdateCategory({ id }: IParams) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    } 
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<AccessoryCategory>(['accessoriesCategory', { id }], async () => await getAccessoriesCategory({ id }));
+    await queryClient.prefetchQuery<AccessoryCategory>(['accessoriesCategory', { id }], async () => await getAccessoriesCategory({ id,ctx }));
 
     return {
         props: {

@@ -9,6 +9,7 @@ import ListRentalsToday from "../../components/List/Rentals/Today";
 import Title from "../../components/Title";
 import { getRentalsAccessoriesToday, useRentalsAccessoriesToday } from "../../services/hooks/Request/useRentalsAccessoriesToday";
 import { getRentalsDressesToday, useRentalsDressesToday } from "../../services/hooks/Request/useRentalsDressesToday";
+import {  parseCookies } from "nookies";
 
 
 
@@ -35,10 +36,20 @@ export default function Today() {
 } 
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Rental[]>([`rentalsDressesToday`], async () => await getRentalsDressesToday());
-    await queryClient.prefetchQuery<Rental[]>([`rentalsAccessoriesToday`], async () => await getRentalsAccessoriesToday());
+    await queryClient.prefetchQuery<Rental[]>([`rentalsDressesToday`], async () => await getRentalsDressesToday(ctx));
+    await queryClient.prefetchQuery<Rental[]>([`rentalsAccessoriesToday`], async () => await getRentalsAccessoriesToday(ctx));
 
     return { 
         props: {

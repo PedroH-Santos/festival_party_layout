@@ -9,6 +9,7 @@ import Title from "../../../components/Title";
 import { getAccessories, useAccessories } from "../../../services/hooks/Request/useAccessories";
 import { getClients, useClients } from "../../../services/hooks/Request/useClients";
 import { getUsers, useUsers } from "../../../services/hooks/Request/useUsers";
+import {  parseCookies } from "nookies";
 
 
 export default function InsertRental() {
@@ -31,11 +32,21 @@ export default function InsertRental() {
   }
 
 
-  export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+  export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    } 
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers());
-    await queryClient.prefetchQuery<Accessory[]>([`accessories`], async () => await getAccessories());
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients());
+    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers(ctx));
+    await queryClient.prefetchQuery<Accessory[]>([`accessories`], async () => await getAccessories(ctx));
+    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
 
     return { 
         props: {

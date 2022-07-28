@@ -116,7 +116,8 @@ export default function FormUser() {
                             <FormRequestSuccess message={success} />
                         </div>
 
-                    )}                </form>
+                    )}
+                </form>
             </div>
         </>
     )

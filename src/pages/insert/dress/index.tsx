@@ -6,6 +6,7 @@ import FormDress from "../../../components/Form/Insert/Dress";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import { getDressesCategories, useDressesCategories } from "../../../services/hooks/Request/useDressesCategories";
+import {  parseCookies } from "nookies";
 
 
 export default function InsertDress() {
@@ -27,9 +28,19 @@ export default function InsertDress() {
 
 
   
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+  if(!token){
+      return {
+          redirect: {
+              destination: "/",
+              permanent: false,
+          }
+      }
+  }
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery<CategoryDress[]>([`dressesCategories`], async () => await getDressesCategories());
+  await queryClient.prefetchQuery<CategoryDress[]>([`dressesCategories`], async () => await getDressesCategories(ctx));
 
   return { 
       props: {

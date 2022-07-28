@@ -10,6 +10,7 @@ import { getClients, useClients } from "../../../../services/hooks/Request/useCl
 import { getDresses, useDresses } from "../../../../services/hooks/Request/useDresses";
 import { getRental, useRental } from "../../../../services/hooks/Request/useRental";
 import { getUsers, useUsers } from "../../../../services/hooks/Request/useUsers";
+import {  parseCookies } from "nookies";
 
 
 interface IParams {
@@ -36,14 +37,24 @@ export default function UpdateRental({ id }: IParams) {
   }
 
 
-  export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+  export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }   
+    const { id } = ctx.params as unknown as IParams;
 
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers());
-    await queryClient.prefetchQuery<Dress[]>([`dresses`], async () => await getDresses());
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients());
-    await queryClient.prefetchQuery<Rental>(['rental', { id }], async () => await getRental({ id }));
+    await queryClient.prefetchQuery<User[]>([`users`], async () => await getUsers(ctx));
+    await queryClient.prefetchQuery<Dress[]>([`dresses`], async () => await getDresses(ctx));
+    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
+    await queryClient.prefetchQuery<Rental>(['rental', { id }], async () => await getRental({ id,ctx }));
 
     return { 
         props: {

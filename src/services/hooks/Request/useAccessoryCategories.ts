@@ -1,15 +1,18 @@
 import { useQuery } from "react-query";
 import { api } from "../../api";
+import { getAPIClient } from "../../axios";
 
 
 
 interface IRequest {
     id: string | string[] | undefined;
+    ctx?:any;
 } 
 
-export async function getAccessoriesCategory({ id } : IRequest): Promise<AccessoryCategory> {
+export async function getAccessoriesCategory({ id,ctx } : IRequest): Promise<AccessoryCategory> {
+    const apiClient = getAPIClient(ctx);
 
-    const response = await api.get<AccessoryCategory>(`/accessory/category/detail/${id}`).then(response => response.data);
+    const response = await apiClient.get<AccessoryCategory>(`/accessory/category/detail/${id}`).then(response => response.data);
     return response;
 }
 

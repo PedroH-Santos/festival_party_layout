@@ -6,6 +6,7 @@ import InformationTransaction from "../../../components/Details/Transaction";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import { getTransaction, useTransaction } from "../../../services/hooks/Request/useTransaction";
+import {  parseCookies } from "nookies";
 
 
 
@@ -30,10 +31,20 @@ export default function DetailTransaction({id}: IParams) {
 }
 
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Transaction>(['transaction',{id}],async () => await getTransaction({ id }));
+    await queryClient.prefetchQuery<Transaction>(['transaction',{id}],async () => await getTransaction({ id,ctx }));
     return {
         props: {
             dehydratedState: dehydrate(queryClient),

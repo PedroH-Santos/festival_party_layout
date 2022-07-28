@@ -4,7 +4,8 @@ import FormProducts from "../../components/Form/Insert/Dress";
 import FormTransaction from "../../components/Form/Insert/Transaction";
 import Header from "../../components/Header";
 import Title from "../../components/Title";
-
+import { parseCookies } from "nookies";
+import { GetServerSideProps } from "next";
 
 export default function InsertTransaction() {
 
@@ -52,4 +53,22 @@ export default function InsertTransaction() {
       </Body>
     </>
   )
+}
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'festivalParty.token': token } = parseCookies(ctx);
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      }
+    }
+  }
+
+  return {
+    props: {
+    }
+  };
+
 }

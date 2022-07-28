@@ -6,6 +6,7 @@ import FormUpdateClient from "../../../components/Form/Update/Client";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import { getClient, useClient } from "../../../services/hooks/Request/useClient";
+import {  parseCookies } from "nookies";
 
 interface IParams {
     id: string;
@@ -29,10 +30,20 @@ export default function UpdateClient({ id }: IParams) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Client>(['client', { id }], async () => await getClient({ id }));
+    await queryClient.prefetchQuery<Client>(['client', { id }], async () => await getClient({ id,ctx }));
 
     return {
         props: {

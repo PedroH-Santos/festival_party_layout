@@ -7,6 +7,7 @@ import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import { getAccessory, useAccessory } from "../../../services/hooks/Request/useAccessory";
 import { getRentalsByIdAccessory, useRentalsByIdAccessory } from "../../../services/hooks/Request/useRentalsByIdAccessory";
+import {  parseCookies } from "nookies";
 
 interface IParams {
     id: string;
@@ -33,11 +34,21 @@ export default function DetailAccessory( { id  }: IParams ) {
     ) 
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
-    const { id } = params as unknown as IParams;
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    const { 'festivalParty.token' : token } = parseCookies(ctx);
+
+    if(!token){
+        return {
+            redirect: {
+                destination: "/",
+                permanent: false,
+            }
+        }
+    }  
+    const { id } = ctx.params as unknown as IParams;
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Accessory>(['accessory',{id}],async () => await getAccessory({ id }));
-    await queryClient.prefetchQuery<Rental[]>(['rentalsByIdAccessory',{accessory_id: id}],async () => await getRentalsByIdAccessory({ accessory_id: id}));
+    await queryClient.prefetchQuery<Accessory>(['accessory',{id}],async () => await getAccessory({ id,ctx }));
+    await queryClient.prefetchQuery<Rental[]>(['rentalsByIdAccessory',{accessory_id: id}],async () => await getRentalsByIdAccessory({ accessory_id: id,ctx}));
     return {
         props: {
             dehydratedState: dehydrate(queryClient),
