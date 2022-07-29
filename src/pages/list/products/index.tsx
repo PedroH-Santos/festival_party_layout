@@ -1,16 +1,16 @@
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import Body from "../../components/Body";
-import Header from "../../components/Header";
-import ListClient from "../../components/List/Clients";
-import Title from "../../components/Title";
-import { getClients, useClients } from "../../services/hooks/Request/useClients";
+import Body from "../../../components/Body";
+import Header from "../../../components/Header";
+import Title from "../../../components/Title";
+import { getProducts, useProducts } from "../../../services/hooks/Request/useProducts";
 import {  parseCookies } from "nookies";
+import ListProducts from "../../../components/List/Products";
 
-export default function Clients() {
+export default function Products() {
 
-    const { data: clients,error  } = useClients();
+    const { data: products,error  } = useProducts();
 
     return (
         <div className="content">
@@ -18,8 +18,8 @@ export default function Clients() {
             <Header />
             <Body>
                 <>
-                    <Title icon={faShirt} title="Clientes" size="lg" />
-                    <ListClient clients={clients}/>
+                    <Title icon={faShirt} title="Produtos" size="lg" />
+                    <ListProducts products={products}/>
                 </>
             </Body>
         </div>
@@ -32,7 +32,6 @@ export default function Clients() {
   
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { 'festivalParty.token' : token } = parseCookies(ctx);
-
     if(!token){
         return {
             redirect: {
@@ -42,7 +41,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
+    await queryClient.prefetchQuery<Product[]>([`products`], async () => await getProducts(ctx));
   
     return { 
         props: {

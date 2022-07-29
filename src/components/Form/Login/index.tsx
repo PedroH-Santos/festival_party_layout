@@ -11,6 +11,7 @@ import { TailSpin } from "react-loader-spinner";
 import FormRequestError from "../Error/FormRequestError";
 import FormRequestSuccess from "../Success/FormRequestSuccess";
 import { AuthContext } from "../../../contexts/AuthContext";
+import Body from "../../Body";
 
 const newUserFormValidationSchema = zod.object({
     password: zod.string().min(1, 'Insira uma senha'),
@@ -52,8 +53,9 @@ export default function Login() {
     }
     return (
         <>
-            <div className={`${styles.background}`}>
-                <div>
+            <div className={`${styles.background}`}> </div>
+            <Body>
+                <div className={`${styles.contrainer}`}>
                     <div className={styles.logo}>
                         <Image src="/images/logo.png" alt="Logo" width={128} height={128} />
                     </div>
@@ -69,7 +71,7 @@ export default function Login() {
                         {loading ? (
                             <button type="button" ><TailSpin color="#FFFFFF" height={25} width={50} /></button>
                         ) : (
-                            <button type="submit">Cadastrar</button>
+                            <button type="submit">Logar</button>
                         )}
                         {error && (
                             <div className={`${styles.message}`}>
@@ -79,9 +81,9 @@ export default function Login() {
                         )}
 
                     </form>
-                </div>
 
-            </div>
+                </div>
+        </Body>
         </>
     )
 }

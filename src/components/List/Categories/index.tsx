@@ -7,13 +7,12 @@ import styles from "./styles.module.scss";
 
 
 interface ListCategoriesProps {
-    categories: DressCategory[] |  AccessoryCategory[] |undefined;
-    origin: string;
-    resetList: string;
+    categories: ProductCategory[] |undefined;
+
 }
 
 
-export default function ListCategories({ categories,origin,resetList }: ListCategoriesProps) {
+export default function ListCategories({ categories }: ListCategoriesProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
@@ -34,11 +33,11 @@ export default function ListCategories({ categories,origin,resetList }: ListCate
                                     <td>{category.name} </td>
                                     <td>
 
-                                        <Link href={`/update/${origin}/category/${category.id}`}>
+                                        <Link href={`/update/products/category/${category.id}`}>
                                             <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                         </Link>
                                         <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
-                                        <ModalDelete elementName={`${category?.name}`} elementId={`${category?.id}`} route={`/${origin}/category`} resetList={`${resetList}`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
+                                        <ModalDelete elementName={`${category?.name}`} elementId={`${category?.id}`} route={`/product/category`} resetList={`productsCategories`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
 
                                     </td>
                                 </tr>
@@ -52,7 +51,7 @@ export default function ListCategories({ categories,origin,resetList }: ListCate
             </div>
 
             <div className={`${styles.button}`}>
-                <Link href={`/insert/${origin}/category`} >
+                <Link href={`/insert/products/category`} >
                     <a className={`${styles.insertNew}`}>Cadastrar</a>
                 </Link>
             </div>

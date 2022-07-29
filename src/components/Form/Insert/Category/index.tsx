@@ -24,12 +24,10 @@ interface CreateCategoryFormData {
     name: string;
 }
 
-interface FormCategoryProps {
-    origin: string;
-}
 
 
-export default function FormCategory({ origin }: FormCategoryProps) {
+
+export default function FormCategory() {
 
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
@@ -45,7 +43,7 @@ export default function FormCategory({ origin }: FormCategoryProps) {
 
     const createCategory = useMutation(async (category: CreateCategoryFormData) => {
         try {
-            const response = await api.post(`/${origin}/category`, {
+            const response = await api.post(`/product/category`, {
                 ...category
             });
 

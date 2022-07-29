@@ -5,16 +5,18 @@ import useModal from "../../../../services/hooks/useModal";
 import ModalDelete from "../../../Modal/Delete";
 import styles from "./styles.module.scss";
 import Image from "next/image";
+import moment from "moment";
+import ModalChangeStatus from "../../../Modal/ChangeStatus";
 
 interface ListRentalsProps {
     rentals: Rental[] | undefined;
-    origin: string;
-    resetList: string;
 }
 
 
-export default function ListRentalsToday({ rentals, origin,resetList }: ListRentalsProps) {
+export default function ListRentalsToday({ rentals }: ListRentalsProps) {
     const { showModal, onChangeStatusModal } = useModal();
+    const { showModal: showModalChange, onChangeStatusModal: onChangeStatusElementModal } = useModal();
+
     return (
         <>
             <div className={`${styles.container}`}>
@@ -38,27 +40,29 @@ export default function ListRentalsToday({ rentals, origin,resetList }: ListRent
                             return (
                                 <tr className={`${styles.item}`} key={rental?.id}>
 
-                                    <td> <Image src={`http://localhost:3333/images/${origin}/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td> <Image src={`http://localhost:3333/images/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td> {rental.client.name} </td>
                                     <td><>R$ {rental.value}</> </td>
-                                    <td><>{rental.start_date}</> </td>
-                                    <td><>{rental.expected_delivery_date}</> </td>
+                                    <td><>{moment(rental.start_date).format('DD-MM-yyyy HH:mm')}</> </td>
+                                    <td><>{moment(rental.expected_delivery_date).format('DD-MM-yyyy HH:mm')}</> </td>
                                     <td>
 
-                                        <Link href={`/update/rental/${origin}/${rental.id}`}>
+                                        <Link href={`/update/rental/${rental.id}`}>
                                             <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                         </Link>
 
                                         <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
-                                        <ModalDelete elementName={`${rental?.description}`} elementId={`${rental?.id}`} route={`/rental/${origin}`} resetList={`${resetList}`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
+                                        <ModalDelete elementName={`${rental?.description}`} elementId={`${rental?.id}`} route={`/rental`} resetList={`rentalsToday`} setIsOpen={onChangeStatusModal} isOpen={showModal} />
 
-                                        <Link href={`/detail/rental/${origin}/${rental.id}`}>
+                                        <Link href={`/detail/rental/${rental.id}`}>
                                             <FontAwesomeIcon icon={faMagnifyingGlass} className={`${styles.icon}`} />
                                         </Link>
 
                                     </td>
                                     <td>
-                                        <button className={`${styles.buttonMark}`}> Agendado </button>
+                                        <a className={`${styles.buttonMark}`} onClick={onChangeStatusElementModal}> Agendado </a>
+                                        <ModalChangeStatus status="PROGRESS" elementName={`${rental?.description}`} elementId={`${rental?.id}`} route={`/rental/changeStatus`} resetList={`rentalsToday`} setIsOpen={onChangeStatusElementModal} isOpen={showModalChange} />
+
                                     </td>
                                 </tr>
 

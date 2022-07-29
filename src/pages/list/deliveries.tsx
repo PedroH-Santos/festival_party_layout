@@ -6,16 +6,13 @@ import Body from "../../components/Body";
 import Header from "../../components/Header";
 import ListDeliveries from "../../components/List/Deliveries";
 import Title from "../../components/Title";
-import { getRentalsAccessoriesFinishToday, useRentalsAccessoriesFinishToday } from "../../services/hooks/Request/useRentalsAccessoriesFinishToday";
-import { getRentalsAccessoriesToday } from "../../services/hooks/Request/useRentalsAccessoriesToday";
-import { getRentalsDressesFinishToday, useRentalsFinishDressesToday } from "../../services/hooks/Request/useRentalsDressesFinishToday";
+import { getRentalsFinishToday, useRentalsFinishToday } from "../../services/hooks/Request/useRentalsFinishToday";
 import {  parseCookies } from "nookies";
 
 
 
 export default function Deliveries() {
-    const { data: rentalsDresses,error  } = useRentalsFinishDressesToday();
-    const { data: rentalsAccessories  } = useRentalsAccessoriesFinishToday();
+    const { data: rentals,error  } = useRentalsFinishToday();
 
     return (
         <div className="content">
@@ -23,10 +20,8 @@ export default function Deliveries() {
             <Body>
                 <>
                     <Title icon={faCalendar} title="Entregas de vestidos do dia" size="lg" />
-                    <ListDeliveries rentals={rentalsDresses} origin="dress" resetList="rentalsDressesFinishToday" />
+                    <ListDeliveries rentals={rentals} />
 
-                    <Title icon={faCalendar} title="Entregas de acessórios do dia" size="lg" />
-                    <ListDeliveries rentals={rentalsAccessories} origin="accessory" resetList="rentalsAccessoriesFinishToday" />
                 </>
             </Body>
         </div>
@@ -45,8 +40,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Rental[]>([`rentalsDressesFinishToday`], async () => await getRentalsDressesFinishToday(ctx));
-    await queryClient.prefetchQuery<Rental[]>([`rentalsAccessoriesFinishToday`], async () => await getRentalsAccessoriesFinishToday(ctx));
+    await queryClient.prefetchQuery<Rental[]>([`rentalsFinishToday`], async () => await getRentalsFinishToday(ctx));
 
     return { 
         props: {

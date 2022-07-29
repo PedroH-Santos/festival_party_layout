@@ -4,27 +4,20 @@ import { getAPIClient } from "../../axios";
 
 
 
-interface IRequest {
-    dress_id: string | undefined;
-    ctx?: any;
-}
 
-export async function getRentals({dress_id,ctx }: IRequest): Promise<Rental[]> {
+
+export async function getRentals(ctx?:any): Promise<Rental[]> {
     const apiClient = getAPIClient(ctx);
 
-    const response = await apiClient.get<Rental[]>(`/rental/dress/filter`, {
-        params: {
-            dress_id,
-        }
-    }).then(response => response.data);
+    const response = await apiClient.get<Rental[]>(`/rental`).then(response => response.data);
 
     return response;
 }
 
 
 
-export function useRentals({dress_id}: IRequest) {
-    return useQuery([`rentalsDressId`,{dress_id}], async () => await getRentals({dress_id}),{
+export function useRentals() {
+    return useQuery([`rentals`], async () => await getRentals(),{
         staleTime: 1000 * 10 * 60,
     });
 

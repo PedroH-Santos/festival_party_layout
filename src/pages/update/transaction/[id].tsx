@@ -31,23 +31,23 @@ export default function UpdateTransaction({ id }: IParams) {
     ]
 
 
-  const originOptions =
+    const originOptions =
     [
       {
-        name: "Aluguél de vestidos",
-        id: "RENTAL_DRESS",
+        name: "Primeira parcela do aluguél",
+        id: "PRIMEIRA_PARCELA",
       },
       {
-        name: "Aluguél de acessórios",
-        id: "RENTAL_ACCESSORY",
+        name: "Segunda parcela do aluguél",
+        id: "SEGUNDA_PARCELA",
       },
       {
         name: "Despesas",
-        id: "RENTAL_SPENDING",
+        id: "DESPESAS",
       },
       {
         name: "Receitas",
-        id: "RENTAL_REVENUE",
+        id: "RECEITAS",
       }
     ]
 

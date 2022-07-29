@@ -1,16 +1,16 @@
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import Body from "../../components/Body";
-import Header from "../../components/Header";
-import ListClient from "../../components/List/Clients";
-import Title from "../../components/Title";
-import { getClients, useClients } from "../../services/hooks/Request/useClients";
+import { getProductsCategories, useProductsCategories } from "../../../../services/hooks/Request/useProductsCategories";
+import Body from "../../../../components/Body";
+import Header from "../../../../components/Header";
+import Title from "../../../../components/Title";
+import ListCategories from "../../../../components/List/Categories";
 import {  parseCookies } from "nookies";
 
-export default function Clients() {
+export default function ProductsCategories() {
 
-    const { data: clients,error  } = useClients();
+    const { data: categories,error  } = useProductsCategories();
 
     return (
         <div className="content">
@@ -18,8 +18,8 @@ export default function Clients() {
             <Header />
             <Body>
                 <>
-                    <Title icon={faShirt} title="Clientes" size="lg" />
-                    <ListClient clients={clients}/>
+                    <Title icon={faShirt} title="Categorias de Produtos" size="lg" />
+                    <ListCategories categories={categories} />
                 </>
             </Body>
         </div>
@@ -42,7 +42,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
+    await queryClient.prefetchQuery<ProductCategory[]>([`productsCategories`], async () => await getProductsCategories(ctx));
   
     return { 
         props: {
