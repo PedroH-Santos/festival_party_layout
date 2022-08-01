@@ -24,7 +24,7 @@ export default function UpdateProduct({ id }: IParams) {
             <Header />
             <Body>
                 <>
-                    <Title icon={faPlus} title="Cadastrar Vestidos" size="lg" />
+                    <Title icon={faPlus} title={ `Atualizar Produto - ${product?.name}`} size="lg" />
                     <FormUpdateProduct categorys={categorys} product={product} />
                 </>
             </Body>

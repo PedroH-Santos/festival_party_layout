@@ -30,7 +30,7 @@ export default function InformationRental({ rental }: InformationProductProps) {
                     </div>
                     <div>
                         <p> Data de Entrega : </p>
-                        <span> <>{(rental?.end_date) ? moment(rental?.end_date).format('DD-MM-yyyy HH:mm') : ''}</>  </span>
+                        <span> <>{(rental?.end_date) ? moment(rental?.end_date).format('DD-MM-yyyy HH:mm') : 'Ainda não finalizado'}</>  </span>
                     </div>
                     <div>
                         <p> Criação : </p>

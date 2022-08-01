@@ -13,13 +13,17 @@ import LabelValidate from "../../Error/LabelValidate";
 import { TailSpin } from "react-loader-spinner";
 import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
-import Password from "../../Inputs/Password";
-import Email from "../../Inputs/Email";
 import Phone from "../../Inputs/Phone";
 
 const newClientFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
-    phone: zod.string().min(1, 'Insira um telefone'),
+    phone: zod.string().min(1, 'Insira um telefone').refine((phone) => { 
+        const phoneTrait = phone.replace("_", "");
+        if (phoneTrait.length === 14 || phoneTrait.length === 15) {
+            return true;
+        }
+        return false;
+    }, "Insira um telefone válido"),
     email: zod.string().email('Insira um email válido').min(1, 'Insira um email '),
 })
 
@@ -48,6 +52,7 @@ export default function FormClient() {
 
     const createClient = useMutation(async (client: CreateClientFormData) => {
         try {
+
             const response = await api.post('/client', {
                 ...client
             });
@@ -95,7 +100,7 @@ export default function FormClient() {
                     </div>
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Phone text="Telefone" style="orange" name={'phone'} register={register} />
+                            <Phone text="Telefone" style="orange" name={'phone'} register={register} control={control} />
                             <LabelValidate message={errors.phone?.message} />
                         </div>
                     </div>

@@ -23,7 +23,7 @@ export default function DetailRental({id}: IParams) {
             <Header />
             <Body>
                 <>
-                    <Title icon={faCircleDollarToSlot} title="Finança Número 1" size="lg" />
+                    <Title icon={faCircleDollarToSlot} title={`Aluguél Número ${rental?.id}`} size="lg" />
                     <InformationRental rental={rental}/>
                 </>
             </Body>

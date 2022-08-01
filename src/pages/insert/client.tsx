@@ -12,7 +12,7 @@ export default function InsertClient() {
             <Header />
             <Body>
                 <>
-                    <Title icon={faPlus} title="Cadastrar Usuário" size="lg" />
+                    <Title icon={faPlus} title="Cadastrar Cliente" size="lg" />
                     <FormClient />
                 </>
             </Body>

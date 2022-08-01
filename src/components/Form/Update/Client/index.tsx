@@ -19,7 +19,13 @@ import Phone from "../../Inputs/Phone";
 
 const newClientFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
-    phone: zod.string().min(1, 'Insira um telefone'),
+    phone: zod.string().min(1, 'Insira um telefone').refine((phone) => {
+        const phoneTrait = phone.replace("_", "");
+        if (phoneTrait.length === 14 || phoneTrait.length === 15) {
+            return true;
+        }
+        return false;
+    }, "Insira um telefone válido"),
     email: zod.string().email('Insira um email válido').min(1, 'Insira um email '),
 })
 
@@ -33,7 +39,7 @@ interface FormUpdateClientProps {
     client: Client | undefined;
 }
 
-export default function FormUpdateClient({client}: FormUpdateClientProps) {
+export default function FormUpdateClient({ client }: FormUpdateClientProps) {
 
     const [error, setErrors] = useState('');
     const [success, setSuccess] = useState('');
@@ -96,7 +102,7 @@ export default function FormUpdateClient({client}: FormUpdateClientProps) {
                     </div>
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Phone text="Telefone" style="orange" name={'phone'} register={register} />
+                            <Phone text="Telefone" style="orange" name={'phone'} register={register} control={control} defaultValue={client?.phone}/>
                             <LabelValidate message={errors.phone?.message} />
                         </div>
                     </div>

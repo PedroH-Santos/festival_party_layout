@@ -22,7 +22,7 @@ export default function DetailTransaction({id}: IParams) {
             <Header />
             <Body>
                 <>
-                    <Title icon={faCircleDollarToSlot} title="Finança Número 1" size="lg" />
+                    <Title icon={faCircleDollarToSlot} title={`Finança Número ${transaction?.id}`} size="lg" />
                     <InformationTransaction transaction={transaction}/>
                 </>
             </Body>

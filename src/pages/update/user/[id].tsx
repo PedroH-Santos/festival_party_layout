@@ -23,7 +23,7 @@ export default function UpdateUser({ id }: IParams) {
             <Header />
             <Body>
                 <>
-                    <Title icon={faPlus} title="Atualizar Transação" size="lg" />
+                    <Title icon={faPlus} title="Atualizar Usuário" size="lg" />
                     <FormUpdateUser user={user}  />
                 </>
             </Body>

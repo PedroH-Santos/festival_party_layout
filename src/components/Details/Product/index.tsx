@@ -1,6 +1,7 @@
 
 import styles from "./styles.module.scss";
 import Image from 'next/image'
+import moment from "moment";
 
 
 interface InformationProductProps {
@@ -39,7 +40,7 @@ export default function InformationProduct({product,rentals} : InformationProduc
                 </div>
                 <div>
                     <p> Criação : </p>
-                    <span> <> {product?.created_at} </> </span>
+                    <span> <>{moment(product?.created_at).format('DD-MM-yyyy HH:mm')}</> </span>
                 </div>
             </div>
         </div>

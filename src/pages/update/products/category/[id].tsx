@@ -23,7 +23,7 @@ export default function UpdateCategory({ id }: IParams) {
             <Header />
             <Body>
                 <>
-                    <Title icon={faPlus} title="Atualizar Transação" size="lg" />
+                    <Title icon={faPlus} title={`Atualizar Categoria - ${category?.name}`} size="lg" />
                     <FormUpdateCategory category={category} />
                 </>
             </Body>

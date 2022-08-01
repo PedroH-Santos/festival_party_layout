@@ -11,7 +11,7 @@ interface NumberProps {
 export default function Email({ name, style, text, register }: NumberProps) {
     const styleLabel = style == 'orange' ? styles.labelOrange : styles.labelWhite;
     const validation = (register) ? 
-    { ...register(name, { valueAsNumber: true }) } 
+    { ...register(name) } 
     : '';
     return (
         <>

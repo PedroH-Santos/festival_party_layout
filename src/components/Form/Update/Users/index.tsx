@@ -13,17 +13,14 @@ import LabelValidate from "../../Error/LabelValidate";
 import { TailSpin } from "react-loader-spinner";
 import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
-import Password from "../../Inputs/Password";
 
 const newUserFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
-    password: zod.string().min(1, 'Insira uma senha'),
     email: zod.string().email('Insira um email válido').min(1, 'Insira um email '),
 })
 
 interface CreateUserFormData {
     name: string;
-    password: string;
     email: string;
 }
 
@@ -41,7 +38,6 @@ export default function FormUpdateUser({ user }: FormUpdateUserProps) {
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateUserFormData>({
         resolver: zodResolver(newUserFormValidationSchema),
         defaultValues: {
-            password: user?.password,
             name: user?.name,
             email: user?.email,
         }
@@ -51,7 +47,7 @@ export default function FormUpdateUser({ user }: FormUpdateUserProps) {
     const createUser = useMutation(async (userUpdate: CreateUserFormData) => {
         try {
             const response = await api.post('/user', {
-                ...userUpdate, id: user?.id
+                ...userUpdate, id: user?.id, password: user?.password
             });
 
             setSuccess("Usuário atualizado com sucesso !");
@@ -73,7 +69,6 @@ export default function FormUpdateUser({ user }: FormUpdateUserProps) {
         setLoading(true);
         const user: CreateUserFormData = {
             name: form.name,
-            password: form.password,
             email: form.email,
         }
         await createUser.mutateAsync(user);
@@ -95,13 +90,6 @@ export default function FormUpdateUser({ user }: FormUpdateUserProps) {
                         </div>
 
                     </div>
-                    <div className={`${styles.containerInputs}`}>
-                        <div>
-                            <Password text="Senha" style="orange" name={'password'} register={register} />
-                            <LabelValidate message={errors.password?.message} />
-                        </div>
-                    </div>
-
                     {loading ? (
                         <button type="button" className={`${styles.insertNew}`}><TailSpin color="#FFFFFF" height={25} width={50} /></button>
                     ) : (

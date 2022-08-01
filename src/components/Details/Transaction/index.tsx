@@ -1,4 +1,5 @@
 
+import moment from "moment";
 import styles from "./styles.module.scss";
 
 
@@ -6,8 +7,11 @@ interface InformationTransactionProps {
     transaction: Transaction | undefined;
 }
 
-export default function InformationTransaction({transaction}: InformationTransactionProps) {
 
+
+
+export default function InformationTransaction({transaction}: InformationTransactionProps) {
+    const type = transaction?.type == 'deposit' ? 'Deposito' : 'Saque';
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.information}`}>
@@ -17,7 +21,7 @@ export default function InformationTransaction({transaction}: InformationTransac
                 </div>
                 <div>
                     <p>  Tipo : </p>
-                    <span> {transaction?.type} </span>
+                    <span> {type} </span>
                 </div>
                 <div>
                     <p> Origem : </p>
@@ -25,7 +29,7 @@ export default function InformationTransaction({transaction}: InformationTransac
                 </div>
                 <div>
                     <p> Criação : </p>
-                    <span> <>{transaction?.created_at}</> </span>
+                    <span> <> {moment(transaction?.created_at).format('DD-MM-yyyy HH:mm')}</> </span>
                 </div>
 
             </div>

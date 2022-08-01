@@ -7,7 +7,7 @@ export default function Menu() {
         <div className={styles.menu}>
             <nav className={styles.links}>
                 <ItemMenu name="Aluguéis" haveSubMenu={true}>
-                    <ItemSubMenu name="Produtos" href="/list/rentals" />
+                    <ItemSubMenu name="Todos" href="/list/rentals" />
                     <ItemSubMenu name="Aluguéis do dia" href="/list/today" />
                     <ItemSubMenu name="Recebimentos" href="/list/deliveries" />
 

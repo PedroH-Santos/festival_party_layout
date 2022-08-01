@@ -69,7 +69,7 @@ export default function FormUpdateProduct({ categorys,product }: FormProductProp
                     }
                 })
             }
-            setSuccess("Vestido atualizado com sucesso !");
+            setSuccess("Produto atualizado com sucesso !");
             return response;
         } catch (error: any) {
             setErrors(error.response.data.message);

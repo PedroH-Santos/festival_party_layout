@@ -19,7 +19,7 @@ export default function Deliveries() {
             <Header />
             <Body>
                 <>
-                    <Title icon={faCalendar} title="Entregas de vestidos do dia" size="lg" />
+                    <Title icon={faCalendar} title="Entregas de produtos do dia" size="lg" />
                     <ListDeliveries rentals={rentals} />
 
                 </>

@@ -55,35 +55,38 @@ export default function Login() {
         <>
             <div className={`${styles.background}`}> </div>
             <Body>
-                <div className={`${styles.contrainer}`}>
-                    <div className={styles.logo}>
-                        <Image src="/images/logo.png" alt="Logo" width={128} height={128} />
-                    </div>
-                    <form className={`${styles.form}`} onSubmit={handleSubmit(onLoginUser)} method="post" >
-                        <div>
-                            <Text text="E-mail" style="orange" name={'email'} register={register} />
-                            <LabelValidate message={errors.email?.message} />
+                <>
+                    <div className={`${styles.contrainer}`}>
+                        <div className={styles.logo}>
+                            <Image src="/images/logo.png" alt="Logo" width={128} height={128} />
                         </div>
-                        <div>
-                            <Password text="Senha" style="orange" name={'password'} register={register} />
-                            <LabelValidate message={errors.password?.message} />
-                        </div>
-                        {loading ? (
-                            <button type="button" ><TailSpin color="#FFFFFF" height={25} width={50} /></button>
-                        ) : (
-                            <button type="submit">Logar</button>
-                        )}
-                        {error && (
-                            <div className={`${styles.message}`}>
-                                <FormRequestError message={error} />
+                        <form className={`${styles.form}`} onSubmit={handleSubmit(onLoginUser)} method="post" >
+                            <div>
+                                <Text text="E-mail" style="orange" name={'email'} register={register} />
+                                <LabelValidate message={errors.email?.message} />
                             </div>
+                            <div>
+                                <Password text="Senha" style="orange" name={'password'} register={register} />
+                                <LabelValidate message={errors.password?.message} />
+                            </div>
+                            {loading ? (
+                                <button type="button" ><TailSpin color="#FFFFFF" height={25} width={50} /></button>
+                            ) : (
+                                <button type="submit">Logar</button>
+                            )}
 
-                        )}
 
-                    </form>
+                        </form>
 
-                </div>
-        </Body>
+                    </div>
+                    {error && (
+                        <div className={`${styles.message}`}>
+                            <FormRequestError message={error} />
+                        </div>
+
+                    )}
+                </>
+            </Body>
         </>
     )
 }
