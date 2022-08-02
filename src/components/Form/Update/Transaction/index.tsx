@@ -15,6 +15,7 @@ import LabelValidate from "../../Error/LabelValidate";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import FormRequestError from "../../Error/FormRequestError";
 import { TailSpin } from "react-loader-spinner";
+import Price from "../../Inputs/Price";
 
 
 
@@ -26,14 +27,14 @@ interface FormTransactionProps {
 }
 
 interface CreateTransactionFormData {
-    value: Number;
+    value: string;
     type: string;
     origin: string;
     description: string;
 }
 
 const newTransactionFormValidationSchema = zod.object({
-    value: zod.number().min(1, 'Digite um valor para a transação'),
+    value: zod.string().min(1, 'Digite um valor para a transação'),
     type: zod.string().min(1, 'Selecione um tipo para a transação'),
     origin: zod.string().min(1, 'Selecione a origem da transação'),
     description: zod.string().min(1, 'Preencha uma descrição '),
@@ -50,7 +51,7 @@ export default function FormUpdateTransaction({ typeOptions, originOptions, tran
         defaultValues: {
             origin: transaction?.origin,
             type: transaction?.type,
-            value: transaction?.value,
+            value:  transaction?.value.toString().replace('.', ','),
             description: transaction?.description,
         }
     });
@@ -77,6 +78,7 @@ export default function FormUpdateTransaction({ typeOptions, originOptions, tran
 
     async function onInsertNewTransaction(form: CreateTransactionFormData) {
         setLoading(true);
+
         const transaction: CreateTransactionFormData = {
             value: form.value,
             type: form.type,
@@ -110,7 +112,7 @@ export default function FormUpdateTransaction({ typeOptions, originOptions, tran
                     </div>
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Number text={"Valor"} name="value" style="orange" register={register} />
+                            <Price text={"Valor"} name="value" style="orange" register={register} />
                             <LabelValidate message={errors.value?.message} />
                         </div>
                     </div>

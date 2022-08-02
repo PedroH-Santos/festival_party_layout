@@ -1,0 +1,44 @@
+.labelWhite {
+    font-size: 1.2rem;
+    color: var(--white);
+    text-align: center;
+}
+
+.labelOrange {
+    color: var(--orange-500);
+    display: block;
+    text-align: center;
+    font-size: 1.2rem;
+}
+ 
+
+.input {
+    background-color: var(--orange-500);
+    padding: 1rem;
+    border: 0;
+    color: var(--white);
+    flex: 1;
+
+
+}
+.input:focus {
+    outline: none;
+}
+
+.inputGroup{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.prefix {
+    background-color: var(--orange-500);
+    color: var(--white);
+    padding: 0.8rem 0.5rem;
+    font-size: 1rem;
+    border-right: 1px solid var(--gray-400);
+    text-align: center;
+    height: 100%;
+    flex: 1;
+}

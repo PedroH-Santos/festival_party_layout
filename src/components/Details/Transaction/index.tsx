@@ -1,5 +1,6 @@
 
 import moment from "moment";
+import { Money } from "../../Trait/Money";
 import styles from "./styles.module.scss";
 
 
@@ -17,7 +18,7 @@ export default function InformationTransaction({transaction}: InformationTransac
             <div className={`${styles.information}`}>
                 <div>
                     <p> Valor : </p>
-                    <span> <>{transaction?.value}</>  </span>
+                    <span> <> <Money value={transaction?.value}/>  </>  </span>
                 </div>
                 <div>
                     <p>  Tipo : </p>

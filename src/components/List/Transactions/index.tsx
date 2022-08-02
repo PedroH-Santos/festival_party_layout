@@ -4,6 +4,7 @@ import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import { Money } from "../../Trait/Money";
 
 interface ListTransactionsProps {
     transactions: Transaction[] | undefined;
@@ -32,7 +33,7 @@ export default function ListTransactions({ transactions }: ListTransactionsProps
                                 <>
                                     <tr className={`${styles.item}`}>
                                         <td>{transaction.type} </td>
-                                        <td> <>R$ {transaction.value} </></td>
+                                        <td> <> <Money value={transaction?.value}/> </></td>
                                         <td>{transaction.origin} </td>
                                         <td>
                                             <Link href={`/update/transaction/${transaction.id}`}>

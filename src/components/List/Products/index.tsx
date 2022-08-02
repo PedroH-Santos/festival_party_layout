@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import { Money } from "../../Trait/Money";
 import styles from "./styles.module.scss";
 
 interface ListProductsProps {
@@ -41,7 +42,7 @@ export default function ListProducts({ products }: ListProductsProps) {
                                 <tr className={`${styles.item}`} key={product.id}>
                                     <td> <Image src={`http://localhost:3333/images/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td>{product.name} </td>
-                                    <td>R$ {product.price} </td>
+                                    <td><Money value={product?.price}/> </td>
                                     <td>{product.category.name} </td>
                                     <td>
                                         

@@ -18,9 +18,10 @@ import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import { TailSpin } from "react-loader-spinner";
 import moment from "moment";
+import Price from "../../Inputs/Price";
 
 interface CreateRentalFormData {
-    value: Number;
+    value: string;
     product_id: string;
     user_id: string;
     client_id: string;
@@ -30,14 +31,14 @@ interface CreateRentalFormData {
 }
 
 interface FormRentalProps {
-    products: Product | undefined,
+    products: Product[] | undefined,
     users: User[] | undefined,
     clients: Client[] | undefined,
     rental: Rental | undefined,
 }
 
 const newRentalFormValidationSchema = zod.object({
-    value: zod.number().nonnegative("O valor deve ser positivo").min(1, 'O valor deve ser maior do que 1'),
+    value: zod.string().min(1, 'O valor deve ser maior do que 1'),
     product_id: zod.string().uuid('Escolha um vestido').min(1, 'Escolha um vestido'),
     user_id: zod.string().uuid('Escolha um usuário').min(1, 'Escolha um usuário'),
     client_id: zod.string().uuid('Escolha um cliente').min(1, 'Escolha um cliente'),
@@ -55,7 +56,7 @@ export default function FormUpdateRental({ products, users, clients,rental }: Fo
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateRentalFormData>({
         resolver: zodResolver(newRentalFormValidationSchema),
         defaultValues: {
-            value: rental?.value,
+            value: rental?.value.toString().replace('.', ','),
             product_id: rental?.product_id,
             user_id: rental?.user_id,
             client_id: rental?.client_id,
@@ -89,6 +90,7 @@ export default function FormUpdateRental({ products, users, clients,rental }: Fo
         setLoading(true);
         setErrors('');
         setSuccess('');
+
         const rental: CreateRentalFormData = {
             value: form.value,
             client_id: form.client_id,
@@ -110,7 +112,7 @@ export default function FormUpdateRental({ products, users, clients,rental }: Fo
                 <form onSubmit={handleSubmit(onInsertNewRental)} method="post" >
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Number name="value" text="Valor" register={register} style="orange" />
+                            <Price name="value" text="Valor" register={register} style="orange" />
                             <LabelValidate message={errors.value?.message} />
 
                         </div>

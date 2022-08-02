@@ -2,6 +2,7 @@
 import styles from "./styles.module.scss";
 import Image from 'next/image'
 import moment from "moment";
+import { Money } from "../../Trait/Money";
 
 
 interface InformationProductProps {
@@ -36,7 +37,7 @@ export default function InformationProduct({product,rentals} : InformationProduc
                 </div>
                 <div>
                     <p>  Preço : </p>
-                    <span> R$ {product?.price}  </span>
+                    <span> <Money value={product?.price} />  </span>
                 </div>
                 <div>
                     <p> Criação : </p>

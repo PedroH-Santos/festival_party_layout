@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import moment from "moment";
+import { Money } from "../../Trait/Money";
 
 
 interface InformationProductProps {
@@ -18,7 +19,7 @@ export default function InformationRental({ rental }: InformationProductProps) {
                     <h3> Detalhes do Aluguél </h3>
                     <div>
                         <p>  Valor : </p>
-                        <span> <>R$ {rental?.value}</>  </span>
+                        <span> <><Money value={rental?.value}/> </>  </span>
                     </div>
                     <div>
                         <p> Data Inicial : </p>
@@ -77,7 +78,7 @@ export default function InformationRental({ rental }: InformationProductProps) {
                                     </div>
                                     <div>
                                         <p> Valor : </p>
-                                        <span> <> R$ {transaction.value}  </></span>
+                                        <span> <> <Money value={transaction?.value}/>  </></span>
                                     </div>
                                     <div>
                                         <p> Data de Criação : </p>

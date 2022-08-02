@@ -2,7 +2,7 @@
 
 interface Rental {
     id: string;
-    value: Number;
+    value: number;
     description: string;
     
     start_date: Date;

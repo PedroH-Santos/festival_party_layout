@@ -7,6 +7,7 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import moment from "moment";
 import ModalChangeStatus from "../../../Modal/ChangeStatus";
+import { Money } from "../../../Trait/Money";
 
 interface ListRentalsProps {
     rentals: Rental[] | undefined;
@@ -42,7 +43,7 @@ export default function ListRentalsToday({ rentals }: ListRentalsProps) {
 
                                     <td> <Image src={`http://localhost:3333/images/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td> {rental.client.name} </td>
-                                    <td><>R$ {rental.value}</> </td>
+                                    <td><> <Money value={rental?.value}/> </> </td>
                                     <td><>{moment(rental.start_date).format('DD-MM-yyyy HH:mm')}</> </td>
                                     <td><>{moment(rental.expected_delivery_date).format('DD-MM-yyyy HH:mm')}</> </td>
                                     <td>

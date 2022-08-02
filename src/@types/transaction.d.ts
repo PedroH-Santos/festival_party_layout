@@ -10,7 +10,7 @@ enum TypeTransaction {
 interface Transaction {
     id: string;
     description: string;
-    value: Number;
+    value: number;
     type: TypeTransaction;
     origin: string;
     created_at: Date;

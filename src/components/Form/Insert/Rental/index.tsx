@@ -18,9 +18,10 @@ import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import { TailSpin } from "react-loader-spinner";
 import moment from "moment";
+import Price from "../../Inputs/Price";
 
 interface CreateRentalFormData {
-    value: Number;
+    value: string;
     product_id: string;
     user_id: string;
     client_id: string;
@@ -36,7 +37,7 @@ interface FormRentalProps {
 }
 
 const newRentalFormValidationSchema = zod.object({
-    value: zod.number().nonnegative("O valor deve ser positivo").min(1, 'O valor deve ser maior do que 1'),
+    value: zod.string().min(1, 'O valor deve ser maior do que 1'),
     product_id: zod.string().uuid('Escolha um vestido').min(1, 'Escolha um vestido'),
     user_id: zod.string().uuid('Escolha um usuário').min(1, 'Escolha um usuário'),
     client_id: zod.string().uuid('Escolha um cliente').min(1, 'Escolha um cliente'),
@@ -54,7 +55,7 @@ export default function FormRental({ products, users, clients }: FormRentalProps
     const { register, handleSubmit, formState: { errors }, control, reset } = useForm<CreateRentalFormData>({
         resolver: zodResolver(newRentalFormValidationSchema),
         defaultValues: {
-            value: 0,
+            value: '',
             product_id: '',
             user_id: '',
             client_id: '',
@@ -110,7 +111,7 @@ export default function FormRental({ products, users, clients }: FormRentalProps
                 <form onSubmit={handleSubmit(onInsertNewRental)} method="post" >
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Number name="value" text="Valor" register={register} style="orange" />
+                            <Price name="value" text="Valor" register={register} style="orange" />
                             <LabelValidate message={errors.value?.message} />
 
                         </div>

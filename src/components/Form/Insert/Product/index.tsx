@@ -16,10 +16,11 @@ import File from "../../Inputs/File";
 import FormRequestError from "../../Error/FormRequestError";
 import FormRequestSuccess from "../../Success/FormRequestSuccess";
 import { TailSpin } from 'react-loader-spinner';
+import Price from "../../Inputs/Price";
 
 interface CreateProductFormData {
     name: string;
-    price: number;
+    price: string;
     category_id: string;
     image: FileList;
 }
@@ -32,7 +33,7 @@ interface FormProductProps {
 
 const newProductFormValidationSchema = zod.object({
     name: zod.string().min(1, 'Insira um nome válido'),
-    price: zod.number().nonnegative("O valor deve ser positivo").min(1, 'O valor deve ser maior do que 1'),
+    price: zod.string().min(1, 'O valor deve ser maior do que 1'),
     category_id: zod.string().min(1, 'Escolha uma categoria').uuid('Id de categoria inválido'),
     image: zod.any().refine((files) => { return files?.length == 1; }, "Escolha uma imagem."),
 })
@@ -50,7 +51,7 @@ export default function FormProduct({ categorys }: FormProductProps) {
         defaultValues: {
             category_id: '',
             name: '',
-            price: 0,
+            price: '',
             image: undefined,
         }
     });
@@ -82,7 +83,7 @@ export default function FormProduct({ categorys }: FormProductProps) {
         }
     }
     )
-    
+
     async function onInsertNewProduct(form: CreateProductFormData) {
         setLoading(true);
         const Product: CreateProductFormData = {
@@ -121,7 +122,7 @@ export default function FormProduct({ categorys }: FormProductProps) {
 
                         </div>
                         <div>
-                            <Number text="Preço" style="orange" name={'price'} register={register} />
+                            <Price text="Preço" style="orange" name={'price'} register={register} control={control} />
                             <LabelValidate message={errors.price?.message} />
 
                         </div>
@@ -130,7 +131,7 @@ export default function FormProduct({ categorys }: FormProductProps) {
                     </div>
                     {loading ? (
                         <button type="button" className={`${styles.insertNew}`}><TailSpin color="#FFFFFF" height={25} width={50} /></button>
-                        ) : (
+                    ) : (
                         <button type="submit" className={`${styles.insertNew}`}>Cadastrar</button>
                     )}
                     {error && (
