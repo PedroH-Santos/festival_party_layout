@@ -4,6 +4,7 @@ const nextConfig = {
 }
 
 module.exports = {
+  reactStrictMode: true,
   images: {
       domains: [ 'localhost','festival-party-api.s3.sa-east-1.amazonaws.com'],
   },
