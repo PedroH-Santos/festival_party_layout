@@ -93,7 +93,7 @@ export default function InformationRental({ rental }: InformationProductProps) {
                 <div className={`${styles.rightInformation}`}>
                     <h3> Produto </h3>
                     <div className={styles.imageProduct}>
-                        <Image src={`http://localhost:3333/images/product/${rental?.product?.images[0].image}`} alt={rental?.product?.images[0]?.id} width={240} height={240} />
+                        <Image src={`${process.env.NEXT_PUBLIC_API_URL_IMAGES}/product/${rental?.product?.images[0].image}`} alt={rental?.product?.images[0]?.id} width={240} height={240} />
                         <div>
                             <div>
                                 <p> Nome : </p>

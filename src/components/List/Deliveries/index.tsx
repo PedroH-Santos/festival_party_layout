@@ -49,7 +49,7 @@ export default function ListDeliveries({ rentals }: ListDeliveriesProps) {
                             return (
                                 <tr className={`${styles.item}`} key={rental?.id}>
 
-                                    <td> <Image src={`http://localhost:3333/images/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td> <Image src={`${process.env.NEXT_PUBLIC_API_URL_IMAGES}/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td> {rental.client.name} </td>
                                     <td><> <Money value={rental?.value}/> </> </td>
                                     <td><>{moment(rental.start_date).format('DD-MM-yyyy HH:mm')}</> </td>

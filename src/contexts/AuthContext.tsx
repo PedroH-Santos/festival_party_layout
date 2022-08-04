@@ -31,10 +31,13 @@ export function AuthProvider({ children }: AuthContextProps) {
     const [user, setUser] = useState<User | null>(null);
     const isAuthenticated = !!user;
     async function signIn({ email, password }: SignInData) {
+        
         const response = await api.post<ResponseToken>('/session', {
             email,
             password
         });
+        console.log(api.request);
+
         setCookie(undefined, 'festivalParty.token', response.data.token, {
             maxAge: 60 * 60 * 24 //1 day
         });

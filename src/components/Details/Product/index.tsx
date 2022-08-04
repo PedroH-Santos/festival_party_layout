@@ -17,7 +17,7 @@ export default function InformationProduct({product,rentals} : InformationProduc
     return (
         <div className={`${styles.container}`}>
             <div className={`${styles.topInformation}`}>
-                <Image src={`http://localhost:3333/images/product/${product?.images[0].image}`} alt={product?.images[0].id} className={styles.image} width={360} height={360} />
+                <Image src={`${process.env.NEXT_PUBLIC_API_URL_IMAGES}/product/${product?.images[0].image}`} alt={product?.images[0].id} className={styles.image} width={360} height={360} />
                 <div>
                     <h2> Próximos Aluguéis </h2>
                     {rentalLimit?.map((rental) => {

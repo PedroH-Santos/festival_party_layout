@@ -5,6 +5,6 @@ const nextConfig = {
 
 module.exports = {
   images: {
-      domains: [ 'localhost'],
+      domains: [ 'localhost','festival-party-api.s3.sa-east-1.amazonaws.com'],
   },
 }

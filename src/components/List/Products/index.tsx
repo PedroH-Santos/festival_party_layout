@@ -40,7 +40,7 @@ export default function ListProducts({ products }: ListProductsProps) {
                             return (
 
                                 <tr className={`${styles.item}`} key={product.id}>
-                                    <td> <Image src={`http://localhost:3333/images/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
+                                    <td> <Image src={`${process.env.NEXT_PUBLIC_API_URL_IMAGES}/product/${firstImage}`} alt={firstId} width={60} height={60} /></td>
                                     <td>{product.name} </td>
                                     <td><Money value={product?.price}/> </td>
                                     <td>{product.category.name} </td>
