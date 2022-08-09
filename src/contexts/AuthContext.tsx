@@ -40,6 +40,7 @@ export function AuthProvider({ children }: AuthContextProps) {
             maxAge: 60 * 60 * 24 //1 day
         });
         setUser(response.data.user);
+        Router.reload();
         Router.push('/list/today');
     }
 
