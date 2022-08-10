@@ -3,20 +3,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import Pagination from "../../Pagination";
 import styles from "./styles.module.scss";
 
 
 interface ListUsersProps {
     users: User[] | undefined;
+    pagination: Pagination | undefined;
+    setFilter: Function;
 }
 
 
-export default function ListUsers({ users }: ListUsersProps) {
+export default function ListUsers({ users, pagination,setFilter }: ListUsersProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
+                <div>
+                    <input type="text" onChange={(e) => setFilter(e.target.value)}/>
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -49,6 +55,10 @@ export default function ListUsers({ users }: ListUsersProps) {
 
 
                 </table>
+
+                <Pagination pagination={pagination} />
+
+
             </div>
 
             <div className={`${styles.button}`}>

@@ -18,7 +18,7 @@ export default function Menu() {
                     <ItemSubMenu name="Categorias" href="/list/products/categories" />
                 </ItemMenu>
                 <ItemMenu name="Finanças" href="/list/transactions" haveSubMenu={false} />
-                <ItemMenu name="Usuários" href="/list/users" haveSubMenu={false} />
+                <ItemMenu name="Usuários" href="/list/users/1" haveSubMenu={false} />
                 <ItemMenu name="Clientes" href="/list/clients" haveSubMenu={false} />
 
             </nav>

@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+
+
+
+    .containerTotal {
+        color: var(--red-600);
+    }
+
+    .containerBoxs {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+
+        .box {
+            border: 0.6px solid var(--white);
+            padding: 0.6rem 0.8rem;
+            background-color: var(--orange-500);
+            color: var(--white);
+            margin-right: 0.4rem;
+            transition: all 0.3s ease-in-out;
+            border-radius: 0.2rem;
+            &:hover{ 
+                background-color: var(--orange-600);
+
+            }
+            
+        }
+
+        .active {
+            background-color: var(--orange-600);
+        }
+    }
+}
