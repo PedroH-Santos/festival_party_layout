@@ -17,9 +17,9 @@ export default function Menu() {
                     <ItemSubMenu name="Listagem" href="/list/products" />
                     <ItemSubMenu name="Categorias" href="/list/products/categories" />
                 </ItemMenu>
-                <ItemMenu name="Finanças" href="/list/transactions" haveSubMenu={false} />
+                <ItemMenu name="Finanças" href="/list/transactions/1" haveSubMenu={false} />
                 <ItemMenu name="Usuários" href="/list/users/1" haveSubMenu={false} />
-                <ItemMenu name="Clientes" href="/list/clients" haveSubMenu={false} />
+                <ItemMenu name="Clientes" href="/list/clients/1" haveSubMenu={false} />
 
             </nav>
         </div>

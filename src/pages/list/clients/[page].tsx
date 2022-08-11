@@ -21,8 +21,7 @@ interface ClientsProps {
 
 export default function Clients({page,filter}: ClientsProps) {
     const [search, setSearch] = useState<string>(filter)
-    const { data: clients,error  } = useClients({page,search});
-
+    const { data: response,error  } = useClients({page,search});
     return (
         <div className="content">
 
@@ -30,7 +29,7 @@ export default function Clients({page,filter}: ClientsProps) {
             <Body>
                 <>
                     <Title icon={faShirt} title="Clientes" size="lg" />
-                    <ListClient clients={clients}/>
+                    <ListClient clients={response?.clients} pagination={response?.pagination} search={search} setSearch={setSearch}/>
                 </>
             </Body>
         </div>
@@ -60,6 +59,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {  
         props: {
             dehydratedState: dehydrate(queryClient),
+            page,
+            filter: search
         }
     };
   }

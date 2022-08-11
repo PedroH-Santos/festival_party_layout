@@ -7,13 +7,19 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import moment from "moment";
 import { Money } from "../../Trait/Money";
+import Pagination from "../../Pagination";
 
 interface ListRentalsProps {
     rentals: Rental[] | undefined;
+    pagination: Pagination | undefined;
+    startDate: string;
+    setStartDate: Function;
+    expectedDeliveryDate: string;
+    setExpectedDeliveryDate: Function;
 }
 
 
-export default function ListRentals({ rentals }: ListRentalsProps) {
+export default function ListRentals({ rentals,pagination,startDate,setStartDate,expectedDeliveryDate,setExpectedDeliveryDate }: ListRentalsProps) {
     const { showModal, onChangeStatusModal } = useModal();
     return (
         <>
@@ -70,6 +76,7 @@ export default function ListRentals({ rentals }: ListRentalsProps) {
 
 
                 </table>
+
             </div>
 
             <div className={`${styles.button}`}>

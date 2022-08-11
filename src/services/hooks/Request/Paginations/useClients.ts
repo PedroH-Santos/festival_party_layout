@@ -17,7 +17,7 @@ export interface IClientPagination {
 export async function getClients({ctx,search,page}: IRequest): Promise<IClientPagination> {
     const apiClient = getAPIClient(ctx);
     const currentPage = (!page) ? 1 : page;
-    const response = await apiClient.get<IClientPagination>(`/client?page=${currentPage}&search=${search}`).then(response => response.data);
+    const response = await apiClient.get<IClientPagination>(`/client/pagination?page=${currentPage}&search=${search}`).then(response => response.data);
     return response;
 }
 

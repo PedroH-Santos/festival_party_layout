@@ -5,23 +5,31 @@ import Link from "next/link";
 import { useState } from "react";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import Pagination from "../../Pagination";
+import Search from "../../Search";
 import { Money } from "../../Trait/Money";
 import styles from "./styles.module.scss";
 
 interface ListProductsProps {
     products: Product[] | undefined;
+    pagination: Pagination | undefined;
+    search: string;
+    setSearch: Function;
 }
 
 
-export default function ListProducts({ products }: ListProductsProps) {
+export default function ListProducts({ products,pagination,search,setSearch }: ListProductsProps) {
 
     const { showModal, onChangeStatusModal } = useModal();
 
-
+    console.log(products);
 
     return (
         <>
             <div className={`${styles.container}`}>
+            <div className={`${styles.containerSearch}`}>
+                    <Search search={search} setSearch={setSearch}/>
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -66,6 +74,7 @@ export default function ListProducts({ products }: ListProductsProps) {
 
 
                 </table>
+                <Pagination pagination={pagination} search={search} />
 
             </div>
             <div className={`${styles.button}`}>
