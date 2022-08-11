@@ -1,16 +1,27 @@
 import { faShirt } from "@fortawesome/free-solid-svg-icons";
 import { GetServerSideProps } from "next";
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import Body from "../../components/Body";
-import Header from "../../components/Header";
-import ListClient from "../../components/List/Clients";
-import Title from "../../components/Title";
-import { getClients, useClients } from "../../services/hooks/Request/useClients";
+import Body from "../../../components/Body";
+import Header from "../../../components/Header";
+import ListClient from "../../../components/List/Clients";
+import Title from "../../../components/Title";
 import {  parseCookies } from "nookies";
+import { getClients, useClients,IClientPagination } from "../../../services/hooks/Request/Paginations/useClients";
+import { useState } from "react";
 
-export default function Clients() {
+interface IParams {
+    page: number;
+}
 
-    const { data: clients,error  } = useClients();
+interface ClientsProps {
+    page: number;
+    filter: string;
+}
+
+
+export default function Clients({page,filter}: ClientsProps) {
+    const [search, setSearch] = useState<string>(filter)
+    const { data: clients,error  } = useClients({page,search});
 
     return (
         <div className="content">
@@ -32,6 +43,8 @@ export default function Clients() {
   
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { 'festivalParty.token' : token } = parseCookies(ctx);
+    const { page } = ctx.params as unknown as IParams;
+    const  search = (ctx.query.search) ? ctx.query.search as string : '';
 
     if(!token){
         return {
@@ -42,9 +55,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<Client[]>([`clients`], async () => await getClients(ctx));
+    await queryClient.prefetchQuery<IClientPagination>([`clients`,{search,page}], async () => await getClients({page,search,ctx}));
   
-    return { 
+    return {  
         props: {
             dehydratedState: dehydrate(queryClient),
         }

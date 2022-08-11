@@ -1,27 +1,29 @@
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import Pagination from "../../Pagination";
+import Search from "../../Search";
 import styles from "./styles.module.scss";
 
 
 interface ListUsersProps {
     users: User[] | undefined;
     pagination: Pagination | undefined;
-    setFilter: Function;
+    setSearch: Function;
+    search: string;
 }
 
 
-export default function ListUsers({ users, pagination,setFilter }: ListUsersProps) {
+export default function ListUsers({ users, pagination, search,setSearch }: ListUsersProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
-                <div>
-                    <input type="text" onChange={(e) => setFilter(e.target.value)}/>
+                <div className={`${styles.containerSearch}`}>
+                    <Search search={search} setSearch={setSearch}/>
                 </div>
                 <table>
                     <thead className={`${styles.header}`}>
@@ -56,7 +58,7 @@ export default function ListUsers({ users, pagination,setFilter }: ListUsersProp
 
                 </table>
 
-                <Pagination pagination={pagination} />
+                <Pagination pagination={pagination} search={search} />
 
 
             </div>

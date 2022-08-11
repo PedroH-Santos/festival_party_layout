@@ -5,13 +5,17 @@ import Box from "./Box";
 import styles from "./styles.module.scss";
 interface PaginationProps {
     pagination: Pagination | undefined,
+    search: string;
 }
 
 
-export default function Pagination({ pagination }: PaginationProps) {
+export default function Pagination({ pagination,search }: PaginationProps) {
 
 
     if (!pagination) {
+        return <></>;
+    }
+    if(parseInt(pagination.totalCount) <= 0 ){
         return <></>;
     }
     const rows = [];
@@ -23,25 +27,25 @@ export default function Pagination({ pagination }: PaginationProps) {
 
     if (firstPage != lastPage && firstPage != currentPage) {
         //PRIMEIRO
-        rows.push(<Box page={`${firstPage}`} currentPage={currentPage} />)
+        rows.push(<Box page={`${firstPage}`} currentPage={currentPage} search={search} />)
 
     }
     if (currentPage - 1 > firstPage) {
 
         rows.push(<span className={`${styles.more}`}> ... </span>)
-        rows.push(<Box page={`${currentPage - 1}`} currentPage={currentPage} />)
+        rows.push(<Box page={`${currentPage - 1}`} currentPage={currentPage} search={search}/>)
     }
 
-    rows.push(<Box page={`${currentPage}`} currentPage={currentPage} />)
+    rows.push(<Box page={`${currentPage}`} currentPage={currentPage} search={search}/>)
 
     if (currentPage + 1 < lastPage) {
-        rows.push(<Box page={`${currentPage + 1}`} currentPage={currentPage} />)
+        rows.push(<Box page={`${currentPage + 1}`} currentPage={currentPage} search={search}/>)
         rows.push(<span className={`${styles.more}`}> ... </span>)
     }
 
     if (firstPage != lastPage && lastPage != currentPage) {
         //ÚLTIMO
-        rows.push(<Box page={`${lastPage}`} currentPage={currentPage} />)
+        rows.push(<Box page={`${lastPage}`} currentPage={currentPage} search={search}/>)
     }
 
     return (
