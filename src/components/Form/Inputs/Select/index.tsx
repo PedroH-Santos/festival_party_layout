@@ -9,7 +9,7 @@ interface SelectProps {
     text: string;
     options: Option[] | undefined;
     register?: any;
-    control?: any;
+    control: any;
     currentValue?: string;
 }
 

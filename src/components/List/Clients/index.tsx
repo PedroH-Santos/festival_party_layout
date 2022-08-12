@@ -1,6 +1,7 @@
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { Filters } from "../../../services/hooks/useFilter";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import Pagination from "../../Pagination";
@@ -11,20 +12,20 @@ import styles from "./styles.module.scss";
 interface ListClientsProps {
     clients: Client[] | undefined;
     pagination: Pagination | undefined;
-    search: string,
-    setSearch: Function,
+    filters: Filters[],
+    changeValueFilter: Function,
 }
 
 
 
-export default function ListClient({ clients, pagination, search, setSearch }: ListClientsProps) {
+export default function ListClient({ clients, pagination, filters, changeValueFilter }: ListClientsProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
                 <div className={`${styles.containerSearch}`}>
-                    <Search search={search} setSearch={setSearch} />
+                    <Search filters={filters} changeValueFilter={changeValueFilter} />
                 </div>
                 <table>
                     <thead className={`${styles.header}`}>
@@ -60,7 +61,7 @@ export default function ListClient({ clients, pagination, search, setSearch }: L
 
 
                 </table>
-                <Pagination pagination={pagination} search={search} />
+                <Pagination pagination={pagination} filters={filters} />
 
             </div>
 

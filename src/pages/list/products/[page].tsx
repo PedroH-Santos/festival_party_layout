@@ -6,8 +6,9 @@ import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import {  parseCookies } from "nookies";
 import ListProducts from "../../../components/List/Products";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getProducts, IProductsPagination, useProducts } from "../../../services/hooks/Request/Paginations/useProducts";
+import { useFilter } from "../../../services/hooks/useFilter";
 
 
 interface IParams {
@@ -16,14 +17,28 @@ interface IParams {
 
 interface ProductsProps {
     page: number;
-    filter: string;
+    search: string;
 }
 
 
-export default function Products({ page,filter }: ProductsProps) {
+export default function Products({ page,search }: ProductsProps) {
 
-    const [search, setSearch] = useState<string>(filter)
-    const { data: response, error } = useProducts({ page,search });
+    const { filters, insertNewFilter, changeValueFilter, getUrlSearch } = useFilter();
+
+
+    const { data: response, error } = useProducts({ page,urlSearch: getUrlSearch() });
+
+
+    useEffect(() => {
+        const filters = [
+            {
+                name: "search",
+                value: (search) ? search : '',
+                type: "text",
+            },
+        ]
+        insertNewFilter(filters);
+    }, [])
     return (
         <div className="content">
 
@@ -31,7 +46,7 @@ export default function Products({ page,filter }: ProductsProps) {
             <Body>
                 <>
                     <Title icon={faShirt} title="Produtos" size="lg" />
-                    <ListProducts products={response?.products} pagination={response?.pagination} search={search} setSearch={setSearch}/>
+                    <ListProducts products={response?.products} pagination={response?.pagination} filters={filters} changeValueFilter={changeValueFilter}/>
                 </>
             </Body>
         </div>
@@ -47,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { page } = ctx.params as unknown as IParams;
 
     const  search = (ctx.query.search) ? ctx.query.search as string : '';
-
+    const urlSearch = `search=${search}`;
 
     if(!token){
         return {
@@ -58,13 +73,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<IProductsPagination>([`products`,{ page, search}], async () => await getProducts({ page, search, ctx}));
+    await queryClient.prefetchQuery<IProductsPagination>([`products`,{ page, urlSearch}], async () => await getProducts({ page, urlSearch, ctx}));
   
     return { 
         props: {
             dehydratedState: dehydrate(queryClient),
             page,
-            filter: search
+            search,
         }
     };
   }

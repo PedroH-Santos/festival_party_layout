@@ -7,23 +7,24 @@ import ModalDelete from "../../Modal/Delete";
 import { Money } from "../../Trait/Money";
 import Search from "../../Search";
 import Pagination from "../../Pagination";
+import { Filters } from "../../../services/hooks/useFilter";
 
 interface ListTransactionsProps {
     transactions: Transaction[] | undefined;
     pagination: Pagination | undefined;
-    search: string;
-    setSearch: Function;
+    filters: Filters[];
+    changeValueFilter: Function;
 }
 
 
-export default function ListTransactions({ transactions, pagination, search, setSearch }: ListTransactionsProps) {
+export default function ListTransactions({ transactions, pagination, filters, changeValueFilter }: ListTransactionsProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
                 <div className={`${styles.containerSearch}`}>
-                    <Search search={search} setSearch={setSearch} />
+                    <Search filters={filters} changeValueFilter={changeValueFilter} />
                 </div>
                 <table>
                     <thead className={`${styles.header}`}>
@@ -64,7 +65,7 @@ export default function ListTransactions({ transactions, pagination, search, set
 
 
                 </table>
-                <Pagination pagination={pagination} search={search} />
+                <Pagination pagination={pagination} filters={filters} />
 
             </div>
             <div className={`${styles.button}`}>

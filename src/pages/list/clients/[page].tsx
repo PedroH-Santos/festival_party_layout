@@ -7,7 +7,8 @@ import ListClient from "../../../components/List/Clients";
 import Title from "../../../components/Title";
 import {  parseCookies } from "nookies";
 import { getClients, useClients,IClientPagination } from "../../../services/hooks/Request/Paginations/useClients";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFilter } from "../../../services/hooks/useFilter";
 
 interface IParams {
     page: number;
@@ -15,13 +16,26 @@ interface IParams {
 
 interface ClientsProps {
     page: number;
-    filter: string;
+    search: string;
 }
 
 
-export default function Clients({page,filter}: ClientsProps) {
-    const [search, setSearch] = useState<string>(filter)
-    const { data: response,error  } = useClients({page,search});
+export default function Clients({page,search}: ClientsProps) {
+    const { filters, insertNewFilter, changeValueFilter, getUrlSearch } = useFilter();
+    const { data: response,error  } = useClients({page,urlSearch: getUrlSearch()});
+
+    useEffect(() => {
+        const filters = [
+            {
+                name: "search",
+                value: (search) ? search : '',
+                type: "text",
+            },
+        ]
+        insertNewFilter(filters);
+    }, [])
+
+
     return (
         <div className="content">
 
@@ -29,7 +43,7 @@ export default function Clients({page,filter}: ClientsProps) {
             <Body>
                 <>
                     <Title icon={faShirt} title="Clientes" size="lg" />
-                    <ListClient clients={response?.clients} pagination={response?.pagination} search={search} setSearch={setSearch}/>
+                    <ListClient clients={response?.clients} pagination={response?.pagination} filters={filters} changeValueFilter={changeValueFilter}/>
                 </>
             </Body>
         </div>
@@ -44,6 +58,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { 'festivalParty.token' : token } = parseCookies(ctx);
     const { page } = ctx.params as unknown as IParams;
     const  search = (ctx.query.search) ? ctx.query.search as string : '';
+    const urlSearch = `search=${search}`;
 
     if(!token){
         return {
@@ -54,13 +69,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<IClientPagination>([`clients`,{search,page}], async () => await getClients({page,search,ctx}));
+    await queryClient.prefetchQuery<IClientPagination>([`clients`,{urlSearch,page}], async () => await getClients({page,urlSearch,ctx}));
   
     return {  
         props: {
             dehydratedState: dehydrate(queryClient),
             page,
-            filter: search
+            search
         }
     };
   }

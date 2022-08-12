@@ -6,7 +6,7 @@ import { getAPIClient } from "../../../axios";
 interface IRequest {
     ctx?: any;
     page?:number;
-    search: string;
+    urlSearch: string;
 }
 
 export interface IUserPagination {
@@ -15,17 +15,17 @@ export interface IUserPagination {
 }
 
 
-export async function getUsers({page,search,ctx} : IRequest): Promise<IUserPagination> {
+export async function getUsers({page,urlSearch,ctx} : IRequest): Promise<IUserPagination> {
     const apiClient = getAPIClient(ctx);
     const currentPage = (!page) ? 1 : page;
-    const response = await apiClient.get<IUserPagination>(`/user/pagination?page=${currentPage}&search=${search}`).then(response => response.data);
+    const response = await apiClient.get<IUserPagination>(`/user/pagination?page=${currentPage}&${urlSearch}`).then(response => response.data);
     return response;
 }
 
 
 
-export function useUsers({page,search}: IRequest) {
-    return useQuery([`users`, { page,search }], async () => await getUsers({page,search}),{
+export function useUsers({page,urlSearch}: IRequest) {
+    return useQuery([`users`, { page,urlSearch }], async () => await getUsers({page,urlSearch}),{
         staleTime: 1000 * 10 * 60,
     });
 

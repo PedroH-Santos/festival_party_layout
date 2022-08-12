@@ -7,7 +7,8 @@ import ListTransactions from "../../../components/List/Transactions";
 import Title from "../../../components/Title";
 import {  parseCookies } from "nookies";
 import { getTransactions, ITransactionPagination, useTransactions } from "../../../services/hooks/Request/Paginations/useTransactions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFilter } from "../../../services/hooks/useFilter";
 
 
 interface IParams {
@@ -16,23 +17,35 @@ interface IParams {
 
 interface TransactionsProps {
     page: number;
-    filter: string;
+    search: string;
 }
 
 
 
 
 
-export default function Transactions({ page, filter} :TransactionsProps) {
-    const [search, setSearch] = useState<string>(filter)
-  const { data: response,error  } = useTransactions({ page, search});  
+export default function Transactions({ page, search} :TransactionsProps) {
+    const { filters, insertNewFilter, changeValueFilter, getUrlSearch } = useFilter();
+  const { data: response,error  } = useTransactions({ page, urlSearch: getUrlSearch()});  
+
+  useEffect(() => {
+    const filters = [
+        {
+            name: "search",
+            value: (search) ? search : '',
+            type: "text",
+        },
+    ]
+    insertNewFilter(filters);
+}, [])
+
   return (
       <>
             <Header />
             <Body>
                 <>
                     <Title icon={faCircleDollarToSlot} title="Finanças" size="lg" />
-                    <ListTransactions transactions={response?.transactions} pagination={response?.pagination} search={search} setSearch={setSearch} />
+                    <ListTransactions transactions={response?.transactions} pagination={response?.pagination} filters={filters} changeValueFilter={changeValueFilter} />
                 </>
             </Body>
       </>
@@ -44,6 +57,7 @@ export default function Transactions({ page, filter} :TransactionsProps) {
     const { 'festivalParty.token' : token } = parseCookies(ctx);
     const { page } = ctx.params as unknown as IParams;
     const  search = (ctx.query.search) ? ctx.query.search as string : '';
+    const urlSearch = `search=${search}`;
 
     if(!token){
         return {
@@ -54,13 +68,13 @@ export default function Transactions({ page, filter} :TransactionsProps) {
         }
     }  
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<ITransactionPagination>([`transactions`,{search,page}], async () => await getTransactions({ctx,search,page}));
+    await queryClient.prefetchQuery<ITransactionPagination>([`transactions`,{urlSearch,page}], async () => await getTransactions({ctx,urlSearch,page}));
   
     return { 
         props: {
             dehydratedState: dehydrate(queryClient),
             page,
-            filter: search,
+            urlSearch,
         }
     };
   }

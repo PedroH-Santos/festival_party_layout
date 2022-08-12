@@ -6,7 +6,7 @@ import { getAPIClient } from "../../../axios";
 interface IRequest {
     ctx?: any;
     page?:number;
-    search: string;
+    urlSearch: string;
 }
 
 export interface IProductsPagination {
@@ -16,18 +16,18 @@ export interface IProductsPagination {
 
 
 
-export async function getProducts({page,search,ctx} : IRequest): Promise<IProductsPagination> {
+export async function getProducts({page,urlSearch,ctx} : IRequest): Promise<IProductsPagination> {
 
     const apiClient = getAPIClient(ctx);
     const currentPage = (!page) ? 1 : page;
-    const response = await apiClient.get<IProductsPagination>(`/product/pagination?page=${currentPage}&search=${search}`).then(response => response.data);
+    const response = await apiClient.get<IProductsPagination>(`/product/pagination?page=${currentPage}&${urlSearch}`).then(response => response.data);
     return response;
 }
 
 
 
-export function useProducts({page,search} : IRequest) {
-    return useQuery([`products`,{page,search}], async () => await getProducts({page,search}),{
+export function useProducts({page,urlSearch} : IRequest) {
+    return useQuery([`products`,{page,urlSearch}], async () => await getProducts({page,urlSearch}),{
         staleTime: 1000 * 10 * 60,
     });
 

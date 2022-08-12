@@ -8,7 +8,8 @@ import ListUsers from "../../../components/List/Users";
 import Title from "../../../components/Title";
 import { parseCookies } from "nookies";
 import { getUsers, useUsers, IUserPagination } from "../../../services/hooks/Request/Paginations/useUsers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useFilter } from "../../../services/hooks/useFilter";
 
 
 interface IParams {
@@ -17,21 +18,30 @@ interface IParams {
 
 interface UsersProps {
     page: number;
-    filter: string;
+    search: string;
 }
 
 
-export default function Users({ page,filter }: UsersProps) {
-    const [search, setSearch] = useState<string>(filter)
-    const { data: response, error } = useUsers({ page,search });
-
+export default function Users({ page,search }: UsersProps) {
+    const { filters, insertNewFilter, changeValueFilter, getUrlSearch } = useFilter();
+    const { data: response, error } = useUsers({ page,urlSearch: getUrlSearch() });
+    useEffect(() => {
+        const filters = [
+            {
+                name: "search",
+                value: (search) ? search : '',
+                type: "text",
+            },
+        ]
+        insertNewFilter(filters);
+    }, [])
     return (
         <>
             <Header />
             <Body>
                 <>
                     <Title icon={faUser} title="Usuários" size="lg" />
-                    <ListUsers users={response?.users} pagination={response?.pagination} setSearch={setSearch} search={search}/>
+                    <ListUsers users={response?.users} pagination={response?.pagination} changeValueFilter={changeValueFilter} filters={filters}/>
                 </>
             </Body>
         </>
@@ -44,6 +54,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const { page } = ctx.params as unknown as IParams;
 
     const  search = (ctx.query.search) ? ctx.query.search as string : '';
+    const urlSearch = `search=${search}`;
 
     if (!token) {
         return {
@@ -54,13 +65,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
     }
     const queryClient = new QueryClient();
-    await queryClient.prefetchQuery<IUserPagination>([`users`, { page,search }], async () => await getUsers({ page, ctx,search }));
+    await queryClient.prefetchQuery<IUserPagination>([`users`, { page,urlSearch }], async () => await getUsers({ page, ctx,urlSearch }));
 
     return {
         props: {
             dehydratedState: dehydrate(queryClient),
             page,
-            filter: search,
+            search,
         }
     };
 }

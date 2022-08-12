@@ -1,23 +1,6 @@
 
     .container {
-        background-color: var(--orange-500);
-        .inputSearch {
-            border: 0px;
-            padding: 0.5rem;
-            color: var(--white);
-            background-color: var(--orange-500);
-            
-            &:focus {
-                outline: none;
-            }
+        margin-left: 2rem;
 
-    
-        }
-        label {
-            height: 100%;
-            color: var(--white);
-            padding: 0.3rem;
-            border-right: 1px solid var(--white);
-        }
 
     } 

@@ -121,7 +121,7 @@ export default function FormUpdateProduct({ categorys,product }: FormProductProp
 
                         </div>
                         <div>
-                            <Price text="Preço" style="orange" name={'price'} register={register} />
+                            <Price text="Preço" style="orange" name={'price'} register={register} control={control}/>
                             <LabelValidate message={errors.price?.message} />
 
                         </div>
