@@ -9,7 +9,7 @@ interface PriceProps {
     text: string;
     style?: string;
     register?: any;
-    control?: any;
+    control: any;
 }
 
 export default function Price({ name, style, text, register, control }: PriceProps) {

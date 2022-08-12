@@ -116,7 +116,7 @@ export default function FormTransaction({ typeOptions, originOptions }: FormTran
                     </div>
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Price text={"Valor"} name="value" style="orange" register={register} />
+                            <Price text={"Valor"} name="value" style="orange" register={register} control={control} />
                             <LabelValidate message={errors.value?.message} />
                         </div>
                     </div>

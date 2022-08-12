@@ -7,17 +7,27 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import moment from "moment";
 import { Money } from "../../Trait/Money";
+import Pagination from "../../Pagination";
+import { Filters } from "../../../services/hooks/useFilter";
+import Search from "../../Search";
 
 interface ListRentalsProps {
     rentals: Rental[] | undefined;
+    pagination: Pagination | undefined;
+    filters: Filters[];
+    changeValueFilter: Function;
+    
 }
 
 
-export default function ListRentals({ rentals }: ListRentalsProps) {
+export default function ListRentals({ rentals,pagination,filters, changeValueFilter}: ListRentalsProps) {
     const { showModal, onChangeStatusModal } = useModal();
     return (
         <>
             <div className={`${styles.container}`}>
+            <div className={`${styles.containerSearch}`}>
+                    <Search filters={filters} changeValueFilter={changeValueFilter}/>
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -70,6 +80,8 @@ export default function ListRentals({ rentals }: ListRentalsProps) {
 
 
                 </table>
+                <Pagination pagination={pagination} filters={filters} />
+
             </div>
 
             <div className={`${styles.button}`}>

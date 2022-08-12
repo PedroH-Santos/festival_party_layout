@@ -2,18 +2,24 @@ import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Filters, useFilter } from "../../../services/hooks/useFilter";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import Pagination from "../../Pagination";
+import Search from "../../Search";
 import { Money } from "../../Trait/Money";
 import styles from "./styles.module.scss";
 
 interface ListProductsProps {
     products: Product[] | undefined;
+    pagination: Pagination | undefined;
+    filters: Filters[];
+    changeValueFilter: Function;
 }
 
 
-export default function ListProducts({ products }: ListProductsProps) {
+export default function ListProducts({ products,pagination,filters,changeValueFilter }: ListProductsProps) {
 
     const { showModal, onChangeStatusModal } = useModal();
 
@@ -22,6 +28,9 @@ export default function ListProducts({ products }: ListProductsProps) {
     return (
         <>
             <div className={`${styles.container}`}>
+            <div className={`${styles.containerSearch}`}>
+                    <Search filters={filters} changeValueFilter={changeValueFilter}/>
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -66,6 +75,7 @@ export default function ListProducts({ products }: ListProductsProps) {
 
 
                 </table>
+                <Pagination pagination={pagination} filters={filters} />
 
             </div>
             <div className={`${styles.button}`}>

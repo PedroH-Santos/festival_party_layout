@@ -112,7 +112,7 @@ export default function FormUpdateRental({ products, users, clients,rental }: Fo
                 <form onSubmit={handleSubmit(onInsertNewRental)} method="post" >
                     <div className={`${styles.containerInputs}`}>
                         <div>
-                            <Price name="value" text="Valor" register={register} style="orange" />
+                            <Price name="value" text="Valor" register={register} style="orange" control={control}/>
                             <LabelValidate message={errors.value?.message} />
 
                         </div>

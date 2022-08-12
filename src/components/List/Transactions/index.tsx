@@ -5,18 +5,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
 import { Money } from "../../Trait/Money";
+import Search from "../../Search";
+import Pagination from "../../Pagination";
+import { Filters } from "../../../services/hooks/useFilter";
 
 interface ListTransactionsProps {
     transactions: Transaction[] | undefined;
+    pagination: Pagination | undefined;
+    filters: Filters[];
+    changeValueFilter: Function;
 }
 
 
-export default function ListTransactions({ transactions }: ListTransactionsProps) {
+export default function ListTransactions({ transactions, pagination, filters, changeValueFilter }: ListTransactionsProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
+                <div className={`${styles.containerSearch}`}>
+                    <Search filters={filters} changeValueFilter={changeValueFilter} />
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -33,13 +42,13 @@ export default function ListTransactions({ transactions }: ListTransactionsProps
                                 <>
                                     <tr className={`${styles.item}`}>
                                         <td>{transaction.type} </td>
-                                        <td> <> <Money value={transaction?.value}/> </></td>
+                                        <td> <> <Money value={transaction?.value} /> </></td>
                                         <td>{transaction.origin} </td>
                                         <td>
                                             <Link href={`/update/transaction/${transaction.id}`}>
                                                 <FontAwesomeIcon icon={faPenToSquare} className={`${styles.icon}`} />
                                             </Link>
-                                                                                        <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
+                                            <FontAwesomeIcon icon={faTrashCan} className={`${styles.icon}`} onClick={onChangeStatusModal} />
                                             <ModalDelete elementName={transaction.id} elementId={transaction.id} isOpen={showModal} resetList={"transactions"} route={'/transaction'} setIsOpen={onChangeStatusModal} />
 
                                             <Link href={`/detail/transaction/${transaction.id}`} >
@@ -56,6 +65,8 @@ export default function ListTransactions({ transactions }: ListTransactionsProps
 
 
                 </table>
+                <Pagination pagination={pagination} filters={filters} />
+
             </div>
             <div className={`${styles.button}`}>
                 <Link href={`/insert/transaction`} >

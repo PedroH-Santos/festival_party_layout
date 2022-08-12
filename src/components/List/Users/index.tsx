@@ -1,22 +1,31 @@
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import { Filters } from "../../../services/hooks/useFilter";
 import useModal from "../../../services/hooks/useModal";
 import ModalDelete from "../../Modal/Delete";
+import Pagination from "../../Pagination";
+import Search from "../../Search";
 import styles from "./styles.module.scss";
 
 
 interface ListUsersProps {
     users: User[] | undefined;
+    pagination: Pagination | undefined;
+    changeValueFilter: Function;
+    filters: Filters[];
 }
 
 
-export default function ListUsers({ users }: ListUsersProps) {
+export default function ListUsers({ users, pagination, filters,changeValueFilter }: ListUsersProps) {
     const { showModal, onChangeStatusModal } = useModal();
 
     return (
         <>
             <div className={`${styles.container}`}>
+                <div className={`${styles.containerSearch}`}>
+                    <Search filters={filters} changeValueFilter={changeValueFilter}/>
+                </div>
                 <table>
                     <thead className={`${styles.header}`}>
                         <tr>
@@ -49,6 +58,10 @@ export default function ListUsers({ users }: ListUsersProps) {
 
 
                 </table>
+
+                <Pagination pagination={pagination} filters={filters} />
+
+
             </div>
 
             <div className={`${styles.button}`}>
